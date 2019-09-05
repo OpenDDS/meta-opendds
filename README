@@ -1,0 +1,48 @@
+This README file contains information on the contents of the meta-opendds layer.
+
+Please see the corresponding sections below for details.
+
+Dependencies
+============
+
+  URI:  https://git.yoctoproject.org/git/poky/meta
+  branch: rocko
+
+
+Patches
+=======
+
+Please submit any patches against the meta-opendds layer via the pull-request
+mechanism on github.
+
+Maintainer: Keith Derrick <keith.derrick@lge.com>
+
+Table of Contents
+=================
+
+  I. Adding the meta-opendds layer to your build
+ II. Misc
+
+
+I. Adding the meta-opendds layer to your build
+=================================================
+
+Run 'bitbake-layers add-layer meta-opendds'
+
+II. Misc
+========
+
+The layer contains two recipes for Open DDS: one versioned, one not.
+
+The unversioned recipe  is provided to allow clients, via a bbappend, to
+build - for example - the HEAD of the master branch or some other version.
+
+To use this unversioned recipe, add the following to your local.conf or
+distro configuration file.
+
+
+    PREFERRED_VERSION_opendds="1.0+git%"
+
+Note that simply providing a different branch and SRCREV may be insufficient.
+If your desired commit is significantly newer than that used for the versioned
+recipe, then the generic build instructions may be insufficient or incorrect.
