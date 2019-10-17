@@ -32,7 +32,7 @@ Run 'bitbake-layers add-layer meta-opendds'
 II. Misc
 ========
 
-The layer contains two recipes for Open DDS: one versioned, one not.
+The layer contains two recipes for OpenDDS: one versioned, one not.
 
 The unversioned recipe  is provided to allow clients, via a bbappend, to
 build - for example - the HEAD of the master branch or some other version.
