@@ -4,9 +4,12 @@ HOMEPAGE = "https://opendds.org"
 LICENSE = "OpenDDS"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=11ee76f6fb51f69658b5bb8327c50b11"
 
+inherit autotools
+
 DEPENDS += " \
-    glib-2.0 \
-    boost \
+    perl-native \
+    cmake-native \
+    opendds-native \
 "
 
 RDEPENDS_${PN}-dev += "perl"
@@ -15,6 +18,9 @@ DDS_SRC_BRANCH ??= "master"
 SRC_URI = "git://github.com/objectcomputing/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH}"
 
 S = "${WORKDIR}/git"
+
+# Set the build directory to be the source directory
+B = "${S}"
 
 do_unpack_extra() {
     # the configure script does not support arguments to the cross compiler
@@ -37,64 +43,27 @@ do_unpack_extra() {
 }
 addtask unpack_extra after do_unpack before do_patch
 
-BASECONF ??= ""
-BASECONF += "\
+OECONF ??= ""
+OECONF_append = "\
     --prefix=${prefix} \
+    --verbose \
     --no-tests \
 "
 
-OECONF_class-target = "\
-    ${BASECONF} \
+OECONF_append_class-target = "\
+    --host-tools=${STAGING_BINDIR_NATIVE}/DDS_HOST_ROOT \
     --target=linux-cross \
     --target-compiler=${S}/${HOST_PREFIX}g++ \
 "
-OECONF_class-native = "\
-    ${BASECONF} \
+OECONF_append_class-native = "\
     --target=linux \
 "
-OECONF_class-nativesdk = "\
-    ${BASECONF} \
+OECONF_append_class-nativesdk = "\
     --target=linux \
 "
 
 do_configure() {
-    # the configure script assumes those environment variables are for host
-    # but bitbake sets them for target, so switch
-    export CC=$BUILD_CC
-    export LD=$BUILD_LD
-    export CXX=$BUILD_CXX
-    export AR=$BUILD_AR
-
-    cd ${S}
     ./configure ${OECONF}
-}
-
-do_compile() {
-    # the configure script assumes those environment variables are for host
-    # but bitbake sets them for target, so switch
-    export CC=$BUILD_CC
-    export LD=$BUILD_LD
-    export CXX=$BUILD_CXX
-    export AR=$BUILD_AR
-
-    cd ${S}
-    oe_runmake
-}
-
-DIR_FROM_class-target ??= "${S}/build/target"
-DIR_FROM_class-native ??= "${S}"
-DIR_FROM_class-nativesdk ??= "${S}"
-
-do_install() {
-    # the configure script assumes those environment variables are for host
-    # but bitbake sets them for target, so switch
-    export CC=$BUILD_CC
-    export LD=$BUILD_LD
-    export CXX=$BUILD_CXX
-    export AR=$BUILD_AR
-
-    cd ${DIR_FROM}
-    oe_runmake install DESTDIR=${D}
 }
 
 do_install_append_class-target() {
@@ -120,14 +89,6 @@ do_install_append_class-nativesdk() {
     ln -sf ${bindir}/tao_idl ${D}${datadir}/ace/bin/tao_idl
 }
 
-FILES_${PN} = " \
-    ${libdir} \
-    ${bindir} \
-"
-FILES_${PN}-dev += " \
-    ${libdir}/cmake/OpenDDS/* \
-    ${includedir} \
-    ${datadir} \
-"
+FILES_${PN}-dev += "${datadir}"
 
 BBCLASSEXTEND = "native nativesdk"
