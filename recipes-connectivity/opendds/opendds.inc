@@ -59,6 +59,7 @@ OECONF_append_class-native = "\
     --target=linux \
 "
 OECONF_append_class-nativesdk = "\
+    --compiler=${S}/${HOST_PREFIX}g++ \
     --target=linux \
 "
 
