@@ -20,9 +20,6 @@ OECONF = " \
 
 require opendds.inc
 
-OECONF_append_class-native = "--host-tools-only"
-OECONF_append_class-nativesdk = "--host-tools-only"
-
 do_install_append_class-target() {
     sed -i -e s:${S}/::g ${D}${libdir}/cmake/OpenDDS/config.cmake
 }

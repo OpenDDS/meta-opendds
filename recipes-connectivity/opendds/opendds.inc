@@ -57,10 +57,12 @@ OECONF_append_class-target = "\
 "
 OECONF_append_class-native = "\
     --target=linux \
+    --host-tools-only \
 "
 OECONF_append_class-nativesdk = "\
     --compiler=${S}/${HOST_PREFIX}g++ \
     --target=linux \
+    --host-tools-only \
 "
 
 do_configure() {
