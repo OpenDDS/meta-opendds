@@ -42,7 +42,10 @@ distro configuration file.
 
 
     PREFERRED_VERSION_opendds="1.0+git%"
+    PREFERRED_VERSION_opendds-native="1.0+git%"
+    PREFERRED_VERSION_nativesdk-opendds="1.0+git%"
 
 Note that simply providing a different branch and SRCREV may be insufficient.
 If your desired commit is significantly newer than that used for the versioned
 recipe, then the generic build instructions may be insufficient or incorrect.
+
