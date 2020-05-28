@@ -78,6 +78,19 @@ do_install_append_class-target() {
     # workaround: /usr/share/dds/dds/idl/IDLTemplate.txt should be placed into target sysroot
     install -d ${D}${datadir}/dds/dds/idl
     cp ${S}/dds/idl/IDLTemplate.txt ${D}${datadir}/dds/dds/idl
+
+    for shared_lib in ${D}${libdir}/*.so.*; do
+        if [ -f $shared_lib ]; then
+            baselib=$(basename $shared_lib)
+            shortlib=$(echo $baselib | sed 's/.so.*//')
+            extn=$(echo $baselib | sed -n 's/^[^.]*\.so//p')
+            extn=$(echo $extn | sed 's/[^. 0-9]*//g')
+            while [ -n "$extn" ]; do
+                extn=$(echo $extn | sed 's/\.[^.]*$//')
+                ln -sf $baselib ${D}${libdir}/$shortlib.so$extn
+            done
+        fi
+    done
 }
 
 do_install_append_class-native() {
