@@ -15,12 +15,39 @@ DEPENDS += " \
 RDEPENDS_${PN}-dev += "perl"
 
 DDS_SRC_BRANCH ??= "master"
-SRC_URI = "git://github.com/objectcomputing/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH}"
+
+# Versions of OCI and Doc group TAO to be used in this version of OpenDDS
+# See for values of the variables 'oci_tao_version' and 'doc_tao_version' in the 'configure'
+# file in the root of the OpenDDS project.
+OCI_TAO_VERSION = "2.2a"
+DOC_TAO_VERSION = '6.5.9'
+DOC_TAO_VERSION_DIR = "${@d.getVar("DOC_TAO_VERSION").replace('.','_')}"
+
+SRC_URI = "git://github.com/objectcomputing/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH};name=opendds"
 
 S = "${WORKDIR}/git"
 
 # Set the build directory to be the source directory
 B = "${S}"
+
+PACKAGECONFIG ??= ""
+PACKAGECONFIG[doc-group] = "--doc-group"
+
+
+SRC_URI += "${@bb.utils.contains('PACKAGECONFIG', \
+                                 'doc-group', \
+                                 'https://github.com/DOCGroup/ACE_TAO/releases/download/ACE+TAO-${DOC_TAO_VERSION_DIR}/ACE+TAO-${DOC_TAO_VERSION}.tar.gz;name=doc_tao;subdir=git', \
+                                 'http://download.ociweb.com/TAO-${OCI_TAO_VERSION}/ACE+TAO-${OCI_TAO_VERSION}_with_latest_patches_NO_makefiles.tar.gz;name=oci_tao;subdir=git', \
+                                 d)}"
+
+
+
+SRC_URI[opendds.md5sum] = "35a0907fd6d6b9c29a5c4718e8c35624"
+SRC_URI[opendds.sha256sum] = "2f0600fb1bdeea0f8e8b6d1720f0552d20d5a3ea983c1c329095f9940dfa402c"
+SRC_URI[oci_tao.md5sum] = "a21185584ca0a2785c8b3d04d5d60f3a"
+SRC_URI[oci_tao.sha256sum] = "ed36f4f3b74ee1872b834b678db52de476aba738ca66f62c3d046d8ff9b3a72f"
+SRC_URI[doc_tao.md5sum] = "fbbc4bdb26f14c22bd86f4f7c27ec11f"
+SRC_URI[doc_tao.sha256sum] = "120b15944c1eab0dcf59e6b7d8b413572ee0aef911eaa732373a21c7f4a0642d"
 
 do_unpack_extra() {
     # the configure script does not support arguments to the cross compiler
