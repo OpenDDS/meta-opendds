@@ -12,7 +12,7 @@ DEPENDS += " \
     opendds-native \
 "
 
-RDEPENDS_${PN}-dev += "perl"
+RDEPENDS_${PN}-dev += " coreutils perl"
 
 DDS_SRC_BRANCH ??= "master"
 SRC_URI = "git://github.com/objectcomputing/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH}"
