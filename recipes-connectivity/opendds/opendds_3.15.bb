@@ -1,5 +1,7 @@
-SRCREV = "58d1c0ca1c74986507773d50cce88fa1c8afb435"
-DDS_SRC_BRANCH = "branch-DDS-3.14"
+# Specify SHA-1 for the release to avoid constantly checking the upstream repo.
+
+SRCREV = "2840c9e00606ae12ee7e27340b9f16bb25d4f0d4"
+DDS_SRC_BRANCH = "branch-DDS-${PV}"
 
 require opendds.inc
 
