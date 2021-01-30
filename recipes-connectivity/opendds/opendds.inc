@@ -7,9 +7,9 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=11ee76f6fb51f69658b5bb8327c50b11"
 inherit autotools
 
 DEPENDS += " \
-    perl-native \
     cmake-native \
     opendds-native \
+    perl-native \
 "
 
 RDEPENDS_${PN}-dev += " coreutils perl"
@@ -71,13 +71,13 @@ do_configure() {
 
 do_install_append_class-target() {
     rm ${D}${datadir}/dds/dds/Version.h
-    cp ${D}${includedir}/dds/Version.h ${D}${datadir}/dds/dds
+    install -m 644 ${D}${includedir}/dds/Version.h ${D}${datadir}/dds/dds
 
     sed -i -e s:${D}/::g ${D}${datadir}/dds/dds-devel.sh
 
     # workaround: /usr/share/dds/dds/idl/IDLTemplate.txt should be placed into target sysroot
     install -d ${D}${datadir}/dds/dds/idl
-    cp ${S}/dds/idl/IDLTemplate.txt ${D}${datadir}/dds/dds/idl
+    install -m 644 ${S}/dds/idl/IDLTemplate.txt ${D}${datadir}/dds/dds/idl
 
     for shared_lib in ${D}${libdir}/*.so.*; do
         if [ -f $shared_lib ]; then
