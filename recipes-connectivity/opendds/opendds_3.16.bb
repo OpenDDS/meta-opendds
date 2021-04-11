@@ -1,9 +1,9 @@
-# Specify SHA-1 for the release to avoid constantly checking the upstream repo.
+require opendds.inc
 
 SRCREV = "8a819227a9df24dddae52f7229c358b69ed8ef8a"
 DDS_SRC_BRANCH = "branch-DDS-${PV}"
 
-require opendds.inc
+UPSTREAM_CHECK_URI = "https://github.com/objectcomputing/OpenDDS/releases"
 
 do_install_append_class-native() {
     # Prepare HOST_ROOT expected by DDS for target build
