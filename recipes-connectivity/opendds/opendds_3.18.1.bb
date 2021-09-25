@@ -17,7 +17,9 @@ DEPENDS += "\
 
 RDEPENDS:${PN}-dev += "coreutils perl"
 
-DDS_SRC_BRANCH = "branch-DDS-${PV}"
+# @see: https://github.com/objectcomputing/OpenDDS/issues/3031
+#DDS_SRC_BRANCH = "branch-DDS-${PV}"
+DDS_SRC_BRANCH = "branch-DDS-3.18"
 
 # Versions of OCI and Doc group TAO to be used in this version of OpenDDS
 # See for values of the variables 'oci_tao_version' and 'doc_tao_version' in the 'configure'
@@ -33,7 +35,7 @@ SRC_URI = "\
 
 UPSTREAM_CHECK_URI = "https://github.com/objectcomputing/OpenDDS/releases"
 
-SRCREV_opendds = "b1d25eeeceb5b1e45036f791292c5dd18dd919bd"
+SRCREV_opendds = "5230a62e9d6524e86b52e64609e273f9dddeeed2"
 SRC_URI[doc_tao3.md5sum] = "6c20b17fea73c7574430b52c2fe459cf"
 SRC_URI[doc_tao3.sha256sum] = "597404c269e3c9688d1ff06d18c6166e4f95d84db5015e214bd38d8fa6ca4996"
 
