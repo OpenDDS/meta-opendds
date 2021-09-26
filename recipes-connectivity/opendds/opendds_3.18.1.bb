@@ -13,6 +13,8 @@ DEPENDS += "\
     cmake-native \
     opendds-native \
     perl-native \
+    qtbase-native \
+    qtbase \
 "
 
 RDEPENDS:${PN}-dev += "coreutils perl"
@@ -31,6 +33,8 @@ SRC_URI = "\
 	git://github.com/objectcomputing/OpenDDS.git;branch=${DDS_SRC_BRANCH};name=opendds \
 	https://github.com/DOCGroup/ACE_TAO/releases/download/ACE+TAO-${DOC_TAO3_VERSION_DIR}/ACE+TAO-${DOC_TAO3_VERSION}.tar.gz;name=doc_tao3;destsuffix=git, \
         file://dds_custom.mwc \
+        file://0001-Disable-the-boost_or_cxx11-std11-is-set-at-configure.patch \
+        file://0002-Disable-the-search-for-moc.patch \
 "
 
 UPSTREAM_CHECK_URI = "https://github.com/objectcomputing/OpenDDS/releases"
@@ -76,17 +80,23 @@ OECONF:append = " \
     --no-tests \
     --no-backup \
     --ace=../ACE_wrappers \
+    --std=c++11 \
     --workspace=${WORKDIR}/dds_custom.mwc \
+    --verbose \
 "
+
+# ${STAGING_EXECPREFIXDIR}
 
 OECONF:append = "${PACKAGECONFIG_CONFARGS}"
 
 OECONF:append:class-target = " \
+    --qt=${RECIPE_SYSROOT}/usr \ 
     --host-tools=${STAGING_BINDIR_NATIVE}/.. \
     --target=linux-cross \
     --target-compiler=${S}/${HOST_PREFIX}g++ \
 "
 OECONF:append:class-native = " \
+    --qt=${RECIPE_SYSROOT_NATIVE}/usr \ 
     --target=linux \
     --host-tools-only \
 "
@@ -98,6 +108,12 @@ OECONF:append:class-nativesdk = " \
 
 do_configure() {
     ./configure ${OECONF}
+}
+
+do_configure:append:class-target() {
+    sed -i 's:${STAGING_BINDIR}/uic:${STAGING_BINDIR_NATIVE}/uic:g' ${S}/examples/DCPS/ishapes/GNUmakefile.ishapes
+    sed -i 's:${STAGING_BINDIR}/moc:${STAGING_BINDIR_NATIVE}/moc:g' ${S}/examples/DCPS/ishapes/GNUmakefile.ishapes
+    sed -i 's:${STAGING_BINDIR}/rcc:${STAGING_BINDIR_NATIVE}/rcc:g' ${S}/examples/DCPS/ishapes/GNUmakefile.ishapes
 }
 
 do_install:append:class-target() {
