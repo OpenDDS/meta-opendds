@@ -15,6 +15,7 @@ DEPENDS += "\
     perl-native \
     qtbase-native \
     qtbase \
+    xerces-c \
 "
 
 RDEPENDS:${PN}-dev += "coreutils perl"
@@ -73,16 +74,21 @@ addtask unpack_extra after do_unpack before do_patch
 PACKAGECONFIG += "${@bb.utils.filter('DISTRO_FEATURES', 'ipv6', d)}"
 PACKAGECONFIG[ipv6] = "--ipv6,--no-ipv6,"
 
+DEPENDS:append_class-target = " xerces-c"
+DEPENDS:append_class-dev = " libxerces-c-dev"
+DEPENDS:append_class-native = " xerces-c-native"
+
 OECONF ??= ""
 OECONF:append = " \
     --prefix=${prefix} \
+    --xerces3=${STAGING_DIR_TARGET}/usr \
     --doc-group3 \
     --no-tests \
     --no-backup \
+    --no-debug \
     --ace=../ACE_wrappers \
     --std=c++11 \
     --workspace=${WORKDIR}/dds_custom.mwc \
-    --verbose \
 "
 
 # ${STAGING_EXECPREFIXDIR}
@@ -91,7 +97,7 @@ OECONF:append = "${PACKAGECONFIG_CONFARGS}"
 
 OECONF:append:class-target = " \
     --qt=${RECIPE_SYSROOT}/usr \ 
-    --host-tools=${STAGING_BINDIR_NATIVE}/.. \
+    --host-tools=${STAGING_BINDIR_NATIVE}/DDS_HOST_ROOT \
     --target=linux-cross \
     --target-compiler=${S}/${HOST_PREFIX}g++ \
 "
@@ -138,6 +144,9 @@ do_install:append:class-target() {
             done
         fi
     done
+
+    # install the ishapes demo
+    install -m 777 ${S}/examples/DCPS/ishapes/ishapes ${D}${bindir}
 }
 
 do_install:append:class-native() {
@@ -162,3 +171,8 @@ do_install:append:class-nativesdk() {
 FILES:${PN}-dev += "${datadir}"
 
 BBCLASSEXTEND = "native nativesdk"
+
+INSANE_SKIP_${PN} += "dev-so"
+
+FILES_SOLIBSDEV = ""
+FILES_${PN} += "${libdir}/*.so"
