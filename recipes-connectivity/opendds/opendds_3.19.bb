@@ -20,19 +20,15 @@ DEPENDS += "\
 
 RDEPENDS:${PN}-dev += "coreutils perl"
 
-# @see: https://github.com/objectcomputing/OpenDDS/issues/3031
-#DDS_SRC_BRANCH = "branch-DDS-${PV}"
-DDS_SRC_BRANCH = "branch-DDS-3.18"
-
 # Versions of OCI and Doc group TAO to be used in this version of OpenDDS
 # See for values of the variables 'oci_tao_version' and 'doc_tao_version' in the 'configure'
 # file in the root of the OpenDDS project.
-DOC_TAO3_VERSION = "7.0.3"
+DOC_TAO3_VERSION = "7.0.5"
 DOC_TAO3_VERSION_DIR = "${@d.getVar("DOC_TAO3_VERSION").replace('.','_')}"
 
 SRC_URI = "\
-	git://github.com/objectcomputing/OpenDDS.git;branch=${DDS_SRC_BRANCH};name=opendds \
-	https://github.com/DOCGroup/ACE_TAO/releases/download/ACE+TAO-${DOC_TAO3_VERSION_DIR}/ACE+TAO-${DOC_TAO3_VERSION}.tar.gz;name=doc_tao3;destsuffix=git, \
+	https://github.com/objectcomputing/OpenDDS/releases/download/DDS-${PV}/OpenDDS-${PV}.tar.gz;name=opendds;subdir=opendds-3.19;striplevel=1 \
+	https://github.com/DOCGroup/ACE_TAO/releases/download/ACE+TAO-${DOC_TAO3_VERSION_DIR}/ACE+TAO-${DOC_TAO3_VERSION}.tar.gz;name=doc_tao3;destsuffix=opendds-3.19 \
         file://dds_custom.mwc \
         file://0001-Disable-the-boost_or_cxx11-std11-is-set-at-configure.patch \
         file://0002-Disable-the-search-for-moc.patch \
@@ -40,14 +36,12 @@ SRC_URI = "\
 
 UPSTREAM_CHECK_URI = "https://github.com/objectcomputing/OpenDDS/releases"
 
-SRCREV_opendds = "5230a62e9d6524e86b52e64609e273f9dddeeed2"
-SRC_URI[doc_tao3.md5sum] = "6c20b17fea73c7574430b52c2fe459cf"
-SRC_URI[doc_tao3.sha256sum] = "597404c269e3c9688d1ff06d18c6166e4f95d84db5015e214bd38d8fa6ca4996"
-
-
-S = "${WORKDIR}/git"
+SRC_URI[opendds.sha256sum] = "2236d86b6629601d92b3c597fe9f2b63a4a4ac779866e11576c50e5aa95d6cb8"
+SRC_URI[doc_tao3.md5sum] = "47362d44afa3d69a85d8c5f1c36ac113"
+SRC_URI[doc_tao3.sha256sum] = "da10403fcd6b7a39d90a8bb2d4d5669ae71f297fe1617e6e221fa109fdff74d6"
 
 # Set the build directory to be the source directory
+# kind of work around for the MPC build system?
 B = "${S}"
 
 do_unpack_extra() {
