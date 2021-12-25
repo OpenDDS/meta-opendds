@@ -13,9 +13,6 @@ DEPENDS += "\
     cmake-native \
     opendds-native \
     perl-native \
-    qtbase-native \
-    qtbase \
-    xerces-c \
 "
 
 RDEPENDS:${PN}-dev += "coreutils perl"
@@ -30,11 +27,9 @@ SRC_URI = "\
 	https://github.com/objectcomputing/OpenDDS/releases/download/DDS-${PV}/OpenDDS-${PV}.tar.gz;name=opendds;subdir=opendds-3.19;striplevel=1 \
 	https://github.com/DOCGroup/ACE_TAO/releases/download/ACE+TAO-${DOC_TAO3_VERSION_DIR}/ACE+TAO-${DOC_TAO3_VERSION}.tar.gz;name=doc_tao3;destsuffix=opendds-3.19 \
         file://dds_custom.mwc \
-        file://0001-Disable-the-boost_or_cxx11-std11-is-set-at-configure.patch \
-        file://0002-Disable-the-search-for-moc.patch \
 "
 
-UPSTREAM_CHECK_URI = "https://github.com/objectcomputing/OpenDDS/releases"
+UPSTREAM_CHECK_URI = "https://github.com/objectcomputing/OpenDDS/releases/"
 
 SRC_URI[opendds.sha256sum] = "2236d86b6629601d92b3c597fe9f2b63a4a4ac779866e11576c50e5aa95d6cb8"
 SRC_URI[doc_tao3.md5sum] = "47362d44afa3d69a85d8c5f1c36ac113"
@@ -68,14 +63,9 @@ addtask unpack_extra after do_unpack before do_patch
 PACKAGECONFIG += "${@bb.utils.filter('DISTRO_FEATURES', 'ipv6', d)}"
 PACKAGECONFIG[ipv6] = "--ipv6,--no-ipv6,"
 
-DEPENDS:append_class-target = " xerces-c"
-DEPENDS:append_class-dev = " libxerces-c-dev"
-DEPENDS:append_class-native = " xerces-c-native"
-
 OECONF ??= ""
 OECONF:append = " \
     --prefix=${prefix} \
-    --xerces3=${STAGING_DIR_TARGET}/usr \
     --doc-group3 \
     --no-tests \
     --no-backup \
@@ -85,18 +75,14 @@ OECONF:append = " \
     --workspace=${WORKDIR}/dds_custom.mwc \
 "
 
-# ${STAGING_EXECPREFIXDIR}
-
 OECONF:append = "${PACKAGECONFIG_CONFARGS}"
 
 OECONF:append:class-target = " \
-    --qt=${RECIPE_SYSROOT}/usr \ 
-    --host-tools=${STAGING_BINDIR_NATIVE}/DDS_HOST_ROOT \
+    --host-tools=${STAGING_BINDIR_NATIVE}/.. \
     --target=linux-cross \
     --target-compiler=${S}/${HOST_PREFIX}g++ \
 "
 OECONF:append:class-native = " \
-    --qt=${RECIPE_SYSROOT_NATIVE}/usr \ 
     --target=linux \
     --host-tools-only \
 "
@@ -108,12 +94,6 @@ OECONF:append:class-nativesdk = " \
 
 do_configure() {
     ./configure ${OECONF}
-}
-
-do_configure:append:class-target() {
-    sed -i 's:${STAGING_BINDIR}/uic:${STAGING_BINDIR_NATIVE}/uic:g' ${S}/examples/DCPS/ishapes/GNUmakefile.ishapes
-    sed -i 's:${STAGING_BINDIR}/moc:${STAGING_BINDIR_NATIVE}/moc:g' ${S}/examples/DCPS/ishapes/GNUmakefile.ishapes
-    sed -i 's:${STAGING_BINDIR}/rcc:${STAGING_BINDIR_NATIVE}/rcc:g' ${S}/examples/DCPS/ishapes/GNUmakefile.ishapes
 }
 
 do_install:append:class-target() {
@@ -138,9 +118,6 @@ do_install:append:class-target() {
             done
         fi
     done
-
-    # install the ishapes demo
-    install -m 777 ${S}/examples/DCPS/ishapes/ishapes ${D}${bindir}
 }
 
 do_install:append:class-native() {
@@ -165,8 +142,3 @@ do_install:append:class-nativesdk() {
 FILES:${PN}-dev += "${datadir}"
 
 BBCLASSEXTEND = "native nativesdk"
-
-INSANE_SKIP_${PN} += "dev-so"
-
-FILES_SOLIBSDEV = ""
-FILES_${PN} += "${libdir}/*.so"
