@@ -20,20 +20,20 @@ RDEPENDS:${PN}-dev += "coreutils perl"
 # Versions of OCI and Doc group TAO to be used in this version of OpenDDS
 # See for values of the variables 'oci_tao_version' and 'doc_tao_version' in the 'configure'
 # file in the root of the OpenDDS project.
-DOC_TAO3_VERSION = "7.0.5"
+DOC_TAO3_VERSION = "7.0.6"
 DOC_TAO3_VERSION_DIR = "${@d.getVar("DOC_TAO3_VERSION").replace('.','_')}"
 
 SRC_URI = "\
-	https://github.com/objectcomputing/OpenDDS/releases/download/DDS-${PV}/OpenDDS-${PV}.tar.gz;name=opendds;subdir=opendds-3.19;striplevel=1 \
-	https://github.com/DOCGroup/ACE_TAO/releases/download/ACE+TAO-${DOC_TAO3_VERSION_DIR}/ACE+TAO-${DOC_TAO3_VERSION}.tar.gz;name=doc_tao3;destsuffix=opendds-3.19 \
+	https://github.com/objectcomputing/OpenDDS/releases/download/DDS-${PV}/OpenDDS-${PV}.tar.gz;name=opendds;subdir=opendds-${PV};striplevel=1 \
+	https://github.com/DOCGroup/ACE_TAO/releases/download/ACE+TAO-${DOC_TAO3_VERSION_DIR}/ACE+TAO-${DOC_TAO3_VERSION}.tar.gz;name=doc_tao3;destsuffix=opendds-${PV} \
         file://dds_custom.mwc \
 "
 
 UPSTREAM_CHECK_URI = "https://github.com/objectcomputing/OpenDDS/releases/"
 
-SRC_URI[opendds.sha256sum] = "2236d86b6629601d92b3c597fe9f2b63a4a4ac779866e11576c50e5aa95d6cb8"
-SRC_URI[doc_tao3.md5sum] = "47362d44afa3d69a85d8c5f1c36ac113"
-SRC_URI[doc_tao3.sha256sum] = "da10403fcd6b7a39d90a8bb2d4d5669ae71f297fe1617e6e221fa109fdff74d6"
+SRC_URI[opendds.sha256sum] = "00d34115dc2ea63b56235949f9afa4a5aa255157fdf3b2a58506102fc473558b"
+SRC_URI[doc_tao3.md5sum] = "f618bfd49138d15984704e09dc54aa54"
+SRC_URI[doc_tao3.sha256sum] = "ad29a5716573c3e12d3c3dfe4ce233bc346196569d197fb55141a260e866523b"
 
 # Set the build directory to be the source directory
 # kind of work around for the MPC build system?
