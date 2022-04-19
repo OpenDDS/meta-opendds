@@ -65,6 +65,9 @@ OECONF:append:class-nativesdk = "\
     --host-tools-only \
 "
 
+# enable do_configure network access to support configure script wget download operations
+do_configure[network] = "1"
+
 do_configure() {
     ./configure ${OECONF}
 }
