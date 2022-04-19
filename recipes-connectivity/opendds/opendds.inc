@@ -105,10 +105,10 @@ do_install:append:class-nativesdk() {
     ln -sf ${bindir}/tao_idl ${D}${datadir}/ace/bin/tao_idl
 }
 
-INSANE_SKIP_${PN} += "dev-so"
+INSANE_SKIP:${PN} += "dev-so"
 
-FILES_SOLIBSDEV = ""
-FILES_${PN} += "${libdir}/*.so"
+FILES:SOLIBSDEV = ""
+FILES:${PN} += "${libdir}/*.so"
 FILES:${PN}-dev += "${datadir}"
 
 BBCLASSEXTEND = "native nativesdk"
