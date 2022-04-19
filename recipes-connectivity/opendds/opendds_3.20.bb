@@ -61,7 +61,9 @@ do_unpack_extra() {
 addtask unpack_extra after do_unpack before do_patch
 
 PACKAGECONFIG += "${@bb.utils.filter('DISTRO_FEATURES', 'ipv6', d)}"
+
 PACKAGECONFIG[ipv6] = "--ipv6,--no-ipv6,"
+PACKAGECONFIG[ishapes] = "--qt --qt-include=${STAGING_INCDIR},,qtbase"
 
 OECONF ??= ""
 OECONF:append = " \
@@ -118,6 +120,11 @@ do_install:append:class-target() {
             done
         fi
     done
+
+   if [ "${@bb.utils.filter('PACKAGECONFIG', 'ishapes', d)}" ]; then
+     install -d ${D}${bindir}
+     install -m 755 ${B}/examples/DCPS/ishapes/ishapes ${D}${bindir}
+   fi
 }
 
 do_install:append:class-native() {
