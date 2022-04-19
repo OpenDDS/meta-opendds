@@ -3,7 +3,7 @@
 # In order to use this recipe, add the following to either local.conf
 # or an image recipe.
 #
-#  PREFERRED_VERSION_opendds="1.0+git%"
+#  PREFERRED_VERSION:opendds="1.0+git%"
 #
 # It is not guaranteed to build. At any time the HEAD of master may not
 # be compatible with the general build instructions in opendds.inc.
@@ -20,11 +20,11 @@ OECONF = " \
 
 require opendds.inc
 
-do_install_append_class-target() {
+do_install:append:class-target() {
     sed -i -e s:${S}/::g ${D}${libdir}/cmake/OpenDDS/config.cmake
 }
 
-do_install_append_class-native() {
+do_install:append:class-native() {
     # Prepare HOST_ROOT expected by DDS for target build
     mkdir -p ${D}${bindir}/DDS_HOST_ROOT/ACE_TAO/ACE/bin
     mkdir -p ${D}${bindir}/DDS_HOST_ROOT/bin
