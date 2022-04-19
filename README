@@ -6,7 +6,7 @@ Dependencies
 ============
 
   URI:  https://git.yoctoproject.org/git/poky/meta
-  branch: honister
+  branch: kirkstone
 
 
 Patches
