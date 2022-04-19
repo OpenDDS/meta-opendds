@@ -12,7 +12,7 @@ DEPENDS += " \
     opendds-native \
 "
 
-RDEPENDS_${PN}-dev += " coreutils perl"
+RDEPENDS:${PN}-dev += " coreutils perl"
 
 DDS_SRC_BRANCH ??= "master"
 SRC_URI = "git://github.com/objectcomputing/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH}"
@@ -44,22 +44,22 @@ do_unpack_extra() {
 addtask unpack_extra after do_unpack before do_patch
 
 OECONF ??= ""
-OECONF_append = "\
+OECONF:append = "\
     --prefix=${prefix} \
     --verbose \
     --no-tests \
 "
 
-OECONF_append_class-target = "\
+OECONF:append:class-target = "\
     --host-tools=${STAGING_BINDIR_NATIVE}/DDS_HOST_ROOT \
     --target=linux-cross \
     --target-compiler=${S}/${HOST_PREFIX}g++ \
 "
-OECONF_append_class-native = "\
+OECONF:append:class-native = "\
     --target=linux \
     --host-tools-only \
 "
-OECONF_append_class-nativesdk = "\
+OECONF:append:class-nativesdk = "\
     --compiler=${S}/${HOST_PREFIX}g++ \
     --target=linux \
     --host-tools-only \
@@ -69,7 +69,7 @@ do_configure() {
     ./configure ${OECONF}
 }
 
-do_install_append_class-target() {
+do_install:append:class-target() {
     rm ${D}${datadir}/dds/dds/Version.h
     cp ${D}${includedir}/dds/Version.h ${D}${datadir}/dds/dds
 
@@ -93,13 +93,13 @@ do_install_append_class-target() {
     done
 }
 
-do_install_append_class-native() {
+do_install:append:class-native() {
     rm ${D}${datadir}/dds/bin/opendds_idl
     rm ${D}${datadir}/ace/bin/ace_gperf
     rm ${D}${datadir}/ace/bin/tao_idl
 }
 
-do_install_append_class-nativesdk() {
+do_install:append:class-nativesdk() {
     ln -sf ${bindir}/opendds_idl ${D}${datadir}/dds/bin/opendds_idl
     ln -sf ${bindir}/ace_gperf ${D}${datadir}/ace/bin/ace_gperf
     ln -sf ${bindir}/tao_idl ${D}${datadir}/ace/bin/tao_idl
@@ -109,6 +109,6 @@ INSANE_SKIP_${PN} += "dev-so"
 
 FILES_SOLIBSDEV = ""
 FILES_${PN} += "${libdir}/*.so"
-FILES_${PN}-dev += "${datadir}"
+FILES:${PN}-dev += "${datadir}"
 
 BBCLASSEXTEND = "native nativesdk"

@@ -5,7 +5,7 @@ DDS_SRC_BRANCH = "branch-DDS-3.14"
 
 require opendds.inc
 
-do_install_append_class-native() {
+do_install:append:class-native() {
     # Prepare HOST_ROOT expected by DDS for target build
     mkdir -p ${D}${bindir}/DDS_HOST_ROOT/ACE_wrappers/bin
     mkdir -p ${D}${bindir}/DDS_HOST_ROOT/bin
