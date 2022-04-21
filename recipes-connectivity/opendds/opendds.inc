@@ -17,6 +17,23 @@ RDEPENDS:${PN}-dev += " coreutils perl"
 DDS_SRC_BRANCH ??= "master"
 SRC_URI = "git://github.com/objectcomputing/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH}"
 
+## pre-fetch ACE/TAO to download, uses the ACE version number
+OCI_TAO_FILE = "ACE+TAO-${OCI_TAO_VERSION}_with_latest_patches_NO_makefiles.tar.gz"
+DOC_TAO2_FILE = "ACE+TAO-src-${DOC_TAO2_VERSION}.tar.gz"
+DOC_TAO3_FILE = "ACE+TAO-src-${DOC_TAO3_VERSION}.tar.gz"
+
+OCI_TAO_URI = "http://download.objectcomputing.com/TAO-${OCI_TAO_VERSION}/${OCI_TAO_FILE}"
+DOC_TAO2_URI = "https://github.com/DOCGroup/ACE_TAO/releases/download/ACE+TAO-${@'${DOC_TAO2_VERSION}'.replace('.','_')}/${DOC_TAO2_FILE}"
+DOC_TAO3_URI = "https://github.com/DOCGroup/ACE_TAO/releases/download/ACE+TAO-${@'${DOC_TAO3_VERSION}'.replace('.','_')}/${DOC_TAO3_FILE}"
+
+ACE_TAO_FILE ??= "${OCI_TAO_FILE}"
+ACE_TAO_URI ??= "${OCI_TAO_URI}"
+ACE_TAO_SHA256SUM ??= "${OCI_TAO_SHA256SUM}"
+ACE_TAO_OPTION ??= ""
+
+SRC_URI += "${ACE_TAO_URI};name=ace_tao;unpack=0"
+SRC_URI[ace_tao.sha256sum] = "${ACE_TAO_SHA256SUM}"
+
 S = "${WORKDIR}/git"
 
 # Set the build directory to be the source directory
@@ -48,6 +65,7 @@ OECONF:append = "\
     --prefix=${prefix} \
     --verbose \
     --no-tests \
+    ${ACE_TAO_OPTION} \
 "
 
 OECONF:append:class-target = "\
@@ -65,10 +83,8 @@ OECONF:append:class-nativesdk = "\
     --host-tools-only \
 "
 
-# enable do_configure network access to support configure script wget download operations
-do_configure[network] = "1"
-
 do_configure() {
+    cp ${DL_DIR}/${ACE_TAO_FILE} ${S}
     ./configure ${OECONF}
 }
 
