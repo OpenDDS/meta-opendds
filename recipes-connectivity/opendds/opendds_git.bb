@@ -27,12 +27,6 @@ do_configure[network] = "1"
 
 require opendds.inc
 
-# DOC_TAO2_VERSION = "6.5.16"
-# DOC_TAO2_SHA256SUM = "c10a89cae08bf9b6d7bda166a1e35d3a737b726544c276b20b3cc7eb9c75a363"
-# DOC_TAO2_URI = "https://github.com/DOCGroup/ACE_TAO/releases/download/ACE+TAO-${@'${DOC_TAO2_VERSION}'.replace('.','_')}/ACE+TAO-src-${DOC_TAO2_VERSION}.tar.gz"
-# SRC_URI += "${DOC_TAO2_URI};name=ace_tao;unpack=0;subdir=git"
-# SRC_URI[ace_tao.sha256sum] = "${DOC_TAO2_SHA256SUM}"
-
 do_install:append:class-target() {
     sed -i -e s:${S}/::g ${D}${libdir}/cmake/OpenDDS/config.cmake
 }
