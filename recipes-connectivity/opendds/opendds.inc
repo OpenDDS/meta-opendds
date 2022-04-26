@@ -14,9 +14,6 @@ DEPENDS += " \
 
 RDEPENDS:${PN}-dev += " coreutils perl"
 
-DDS_SRC_BRANCH ??= "master"
-SRC_URI = "git://github.com/objectcomputing/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH}"
-
 S = "${WORKDIR}/git"
 
 # Set the build directory to be the source directory
@@ -48,6 +45,7 @@ OECONF:append = "\
     --prefix=${prefix} \
     --verbose \
     --no-tests \
+    ${ACE_TAO_OPTION} \
 "
 
 OECONF:append:class-target = "\
