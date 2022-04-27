@@ -32,7 +32,7 @@ Run 'bitbake-layers add-layer meta-opendds'
 II. Misc
 ========
 
-he layer contains three recipes for OpenDDS: two versioned, one not.
+The layer contains three recipes for OpenDDS: two versioned, one not.
 
 To select the versioned recipes for OpenDDS 3.20 or 3.14, include
 the following in your local.conf 
