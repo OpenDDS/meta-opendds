@@ -34,17 +34,21 @@ II. Misc
 
 The layer contains three recipes for OpenDDS: two versioned, one not.
 
-The versioned receipes are for OpenDDS 3.14 and 3.20, include
+To select the versioned recipes for OpenDDS 3.20 or 3.14, include
 the following in your local.conf 
 
   PREFERRED_VERSION_opendds = "3.20" and optionally set ACE_TAO_OPTION to one of the following:
   ACE_TAO_OPTION = ""             to build with OCI ACE/TAO 2.2a with the latest patches
-  ACE_TAO_OPTION = "--doc-group"  to build with the DOC Group ACE 6.5.16 / TAO 2.5.16 or later in the ACE 6.x / TAO 2.x series
-  ACE_TAO_OPTION = "--doc-group3" to build with the DOC Group ACE 7.0.5 / TAO 3.0.5 or later in the ACE 7.x / TAO 3.x series
+  ACE_TAO_OPTION = "--doc-group"  to build with the DOC Group ACE 6.5.16 / TAO 2.5.16
+  ACE_TAO_OPTION = "--doc-group3" to build with the DOC Group ACE 7.0.5 / TAO 3.0.5
 
   PREFERRED_VERSION_opendds = "3.14" and optionally set ACE_TAO_OPTION to one of the following:
   ACE_TAO_OPTION = ""             to build with OCI ACE/TAO 2.2a with the latest patches
-  ACE_TAO_OPTION = "--doc-group"  to build with the DOC Group ACE 6.5.16 / TAO 2.5.16 or later in the ACE 6.x / TAO 2.x series
+  ACE_TAO_OPTION = "--doc-group"  to build with DOC Group ACE 6.5.8 / TAO 2.5.8
+
+If PREFERRED_VERSION is not specifed in your local.conf then the OpenDDS 3.20 recipe will be
+selected for build by default due to it having a higher version number and when ACE_TAO_OPTION
+is not defined the OCI ACE/TAO 2.2a with the latest patches option will be selected by default.
   
 The unversioned recipe  is provided to allow clients, via a bbappend, to
 build - for example - the HEAD of the master branch or some other version.
