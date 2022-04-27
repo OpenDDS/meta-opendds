@@ -37,8 +37,8 @@ The layer contains three recipes for OpenDDS: two versioned, one not.
 The versioned receipes are for OpenDDS 3.14 and 3.20, include one of
 the following in your local.conf 
 
-  PREFERRED_VERSION:opendds = "3.20"
-  PREFERRED_VERSION:opendds = "3.14"
+  PREFERRED_VERSION_opendds = "3.20"
+  PREFERRED_VERSION_opendds = "3.14"
 
 The unversioned recipe  is provided to allow clients, via a bbappend, to
 build - for example - the HEAD of the master branch or some other version.
@@ -47,9 +47,9 @@ To use this unversioned recipe, add the following to your local.conf or
 distro configuration file.
 
 
-    PREFERRED_VERSION:opendds="1.0+git%"
-    PREFERRED_VERSION:opendds-native="1.0+git%"
-    PREFERRED_VERSION:nativesdk-opendds="1.0+git%"
+    PREFERRED_VERSION_opendds="1.0+git%"
+    PREFERRED_VERSION_opendds-native="1.0+git%"
+    PREFERRED_VERSION_nativesdk-opendds="1.0+git%"
     
 
 Note that simply providing a different branch and SRCREV may be insufficient.
