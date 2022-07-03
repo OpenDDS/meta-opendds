@@ -20,7 +20,7 @@ RDEPENDS:${PN}-dev += "coreutils perl"
 # Versions of OCI and Doc group TAO to be used in this version of OpenDDS
 # See for values of the variables 'oci_tao_version' and 'doc_tao_version' in the 'configure'
 # file in the root of the OpenDDS project.
-DOC_TAO3_VERSION = "7.0.7"
+DOC_TAO3_VERSION = "7.0.8"
 DOC_TAO3_VERSION_DIR = "${@d.getVar("DOC_TAO3_VERSION").replace('.','_')}"
 
 SRC_URI = "\
@@ -32,8 +32,8 @@ SRC_URI = "\
 UPSTREAM_CHECK_URI = "https://github.com/objectcomputing/OpenDDS/releases/"
 
 SRC_URI[opendds.sha256sum] = "418e88df55507164c7133cff362447ee51429686ec683bb3d763e2414622cdef"
-SRC_URI[doc_tao3.md5sum] = "6dfd9619467f884189c001b4e2023650"
-SRC_URI[doc_tao3.sha256sum] = "fd9e5dd3b19b186bbac650500cabc47636be44cf23cbb099f1149ba54171b69e"
+SRC_URI[doc_tao3.md5sum] = "bbe94a64ad22263ba0f29be1cbb1479d"
+SRC_URI[doc_tao3.sha256sum] = "616c3780512a6f9951e82473956106904a84df3b4d718c7c77540aaec07bb86b"
 
 # Set the build directory to be the source directory
 # kind of work around for the MPC build system?
