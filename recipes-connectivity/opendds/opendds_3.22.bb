@@ -31,7 +31,7 @@ SRC_URI = "\
 
 UPSTREAM_CHECK_URI = "https://github.com/objectcomputing/OpenDDS/releases/"
 
-SRC_URI[opendds.sha256sum] = "418e88df55507164c7133cff362447ee51429686ec683bb3d763e2414622cdef"
+SRC_URI[opendds.sha256sum] = "746a722db28b0b387a092c65ddd64061cbc5c9c32dd6cd29a2fa5bbace9c7dba"
 SRC_URI[doc_tao3.md5sum] = "bbe94a64ad22263ba0f29be1cbb1479d"
 SRC_URI[doc_tao3.sha256sum] = "616c3780512a6f9951e82473956106904a84df3b4d718c7c77540aaec07bb86b"
 
