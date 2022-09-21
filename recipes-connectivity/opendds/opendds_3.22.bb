@@ -27,6 +27,8 @@ SRC_URI = "\
 	https://github.com/objectcomputing/OpenDDS/releases/download/DDS-${PV}/OpenDDS-${PV}.tar.gz;name=opendds;subdir=opendds-${PV};striplevel=1 \
 	https://github.com/DOCGroup/ACE_TAO/releases/download/ACE+TAO-${DOC_TAO3_VERSION_DIR}/ACE+TAO-${DOC_TAO3_VERSION}.tar.gz;name=doc_tao3;destsuffix=opendds-${PV} \
         file://dds_custom.mwc \
+	file://0001-qa-fix-buildpath.patch;patchdir=${S}/.. \
+	file://0002-prevent-Yocto-QA-contains-reference-to-TMPDIR-issue.patch \
 "
 
 UPSTREAM_CHECK_URI = "https://github.com/objectcomputing/OpenDDS/releases/"

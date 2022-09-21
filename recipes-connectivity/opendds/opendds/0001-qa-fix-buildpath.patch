@@ -1,0 +1,12 @@
+--- 3.22-r0.orig/ACE_wrappers/TAO/TAO_IDL/be/be_helper.cpp	2022-09-21 07:43:26.565478063 +0200
++++ 3.22-r0.modif/ACE_wrappers/TAO/TAO_IDL/be/be_helper.cpp	2022-09-21 07:44:39.134209347 +0200
+@@ -653,7 +653,6 @@
+ 
+ void TAO_OutStream::insert_comment (const char *file, int line)
+ {
+-  *this << be_nl << "// TAO_IDL - Generated from" << be_nl
+-        << "// " << file << ':' << static_cast<ACE_CDR::ULong> (line)
+-        << be_nl_2;
++  // the ewline must be kept to keep the generated code correct
++  *this << be_nl_2;
+ }
