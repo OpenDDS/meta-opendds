@@ -12,7 +12,7 @@ DOC_TAO3_VERSION = "7.0.8"
 
 OCI_TAO_SHA256SUM = "373ea7b78d521b9b8250e201fc6364ca9d5a8ef398b7b09872571858d526a5aa"
 DOC_TAO2_SHA256SUM = "79be9ddfb13703a12d6030aa5e1a9e4a949ec97e0826f1aca70e85571d80cba3"
-DOC_TAO3_SHA256SUM = "590506ec126fd07b9b63dcdf86175d1b5c42c82b7f9fd180b6bf4ffcb8f95457"
+DOC_TAO3_SHA256SUM = "8546c5decf9275dee89543cfc9e01421ad13b173ffddbd154daa870aa8106254"
 
 OCI_TAO_URI = "http://download.objectcomputing.com/TAO-${OCI_TAO_VERSION}/ACE+TAO-${OCI_TAO_VERSION}_with_latest_patches_NO_makefiles.tar.gz"
 DOC_TAO2_URI = "https://github.com/DOCGroup/ACE_TAO/releases/download/ACE+TAO-${@'${DOC_TAO2_VERSION}'.replace('.','_')}/ACE+TAO-src-${DOC_TAO2_VERSION}.tar.gz"
