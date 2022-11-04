@@ -51,7 +51,7 @@ the following in your local.conf
   ACE_TAO_OPTION = ""             to build with OCI ACE/TAO 2.2a with the latest patches
   ACE_TAO_OPTION = "--doc-group"  to build with DOC Group ACE 6.5.8 / TAO 2.5.8
 
-If PREFERRED_VERSION is not specifed in your local.conf then the OpenDDS 3.20 recipe will be
+If PREFERRED_VERSION is not specifed in your local.conf then the OpenDDS 3.22 recipe will be
 selected for build by default due to it having a higher version number and when ACE_TAO_OPTION
 is not defined the OCI ACE/TAO 2.2a with the latest patches option will be selected by default.
   
