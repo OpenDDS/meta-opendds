@@ -1,18 +1,18 @@
 # Specify SHA-1 for the release to avoid constantly checking the upstream repo.
 
-SRCREV = "bf1b1df276f41baa2f85de103e95fe3f94b4dcc6"
-DDS_SRC_BRANCH = "branch-DDS-3.20"
+SRCREV = "8f28fcea3cb786e01ac0f51f8a8e12854d3e9a5c"
+DDS_SRC_BRANCH = "branch-DDS-3.22"
 SRC_URI = "git://github.com/objectcomputing/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH};name=opendds"
 
 require opendds.inc
 
 OCI_TAO_VERSION = "2.2a"
-DOC_TAO2_VERSION = "6.5.16"
-DOC_TAO3_VERSION = "7.0.6"
+DOC_TAO2_VERSION = "6.5.18"
+DOC_TAO3_VERSION = "7.0.8"
 
 OCI_TAO_SHA256SUM = "373ea7b78d521b9b8250e201fc6364ca9d5a8ef398b7b09872571858d526a5aa"
-DOC_TAO2_SHA256SUM = "c10a89cae08bf9b6d7bda166a1e35d3a737b726544c276b20b3cc7eb9c75a363"
-DOC_TAO3_SHA256SUM = "590506ec126fd07b9b63dcdf86175d1b5c42c82b7f9fd180b6bf4ffcb8f95457"
+DOC_TAO2_SHA256SUM = "79be9ddfb13703a12d6030aa5e1a9e4a949ec97e0826f1aca70e85571d80cba3"
+DOC_TAO3_SHA256SUM = "8546c5decf9275dee89543cfc9e01421ad13b173ffddbd154daa870aa8106254"
 
 OCI_TAO_URI = "http://download.objectcomputing.com/TAO-${OCI_TAO_VERSION}/ACE+TAO-${OCI_TAO_VERSION}_with_latest_patches_NO_makefiles.tar.gz"
 DOC_TAO2_URI = "https://github.com/DOCGroup/ACE_TAO/releases/download/ACE+TAO-${@'${DOC_TAO2_VERSION}'.replace('.','_')}/ACE+TAO-src-${DOC_TAO2_VERSION}.tar.gz"
