@@ -39,8 +39,8 @@ the following in your local.conf
 
   PREFERRED_VERSION_opendds = "3.22" and optionally set ACE_TAO_OPTION to one of the following:
   ACE_TAO_OPTION = ""             to build with OCI ACE/TAO 2.2a with the latest patches
-  ACE_TAO_OPTION = "--doc-group"  to build with the DOC Group ACE 6.5.16 / TAO 2.5.16
-  ACE_TAO_OPTION = "--doc-group3" to build with the DOC Group ACE 7.0.5 / TAO 3.0.5
+  ACE_TAO_OPTION = "--doc-group"  to build with the DOC Group ACE 6.5.18 / TAO 2.5.18
+  ACE_TAO_OPTION = "--doc-group3" to build with the DOC Group ACE 7.0.8 / TAO 3.0.8
 
   PREFERRED_VERSION_opendds = "3.20" and optionally set ACE_TAO_OPTION to one of the following:
   ACE_TAO_OPTION = ""             to build with OCI ACE/TAO 2.2a with the latest patches
