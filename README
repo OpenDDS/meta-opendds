@@ -34,8 +34,13 @@ II. Misc
 
 The layer contains three recipes for OpenDDS: two versioned, one not.
 
-To select the versioned recipes for OpenDDS 3.22, 3.20 or 3.14, include
+To select the versioned recipes for OpenDDS 3.24, 3.22, 3.20 or 3.14, include
 the following in your local.conf 
+
+  PREFERRED_VERSION_opendds = "3.24" and optionally set ACE_TAO_OPTION to one of the following:
+  ACE_TAO_OPTION = ""             to build with OCI DOC Group ACE 6.5.19 / TAO 2.5.19
+  ACE_TAO_OPTION = "--doc-group"  to build with the DOC Group ACE 6.5.19 / TAO 2.5.19
+  ACE_TAO_OPTION = "--doc-group3" to build with the DOC Group ACE 7.1.0 / TAO 3.1.0
 
   PREFERRED_VERSION_opendds = "3.22" and optionally set ACE_TAO_OPTION to one of the following:
   ACE_TAO_OPTION = ""             to build with OCI ACE/TAO 2.2a with the latest patches
