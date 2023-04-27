@@ -1,6 +1,6 @@
 # Specify SHA-1 for the release to avoid constantly checking the upstream repo.
 
-SRCREV = "8f28fcea3cb786e01ac0f51f8a8e12854d3e9a5c"
+SRCREV = "4dd8c404253b8db95bfe3e98ea38a1b14ef228a8"
 DDS_SRC_BRANCH = "branch-DDS-3.24"
 SRC_URI = "git://github.com/objectcomputing/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH};name=opendds"
 
