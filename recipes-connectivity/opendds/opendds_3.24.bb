@@ -2,7 +2,7 @@
 
 SRCREV = "4dd8c404253b8db95bfe3e98ea38a1b14ef228a8"
 DDS_SRC_BRANCH = "branch-DDS-3.24"
-SRC_URI = "git://github.com/objectcomputing/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH};name=opendds"
+SRC_URI = "git://github.com/OpenDDS/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH};name=opendds"
 
 require opendds.inc
 
