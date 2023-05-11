@@ -36,6 +36,11 @@ The layer contains two recipes for OpenDDS: one versioned and one not.
 
 If PREFERRED_VERSION is not specifed in your local.conf then the OpenDDS 3.24 recipe will be
 selected for build by default
+
+The versioned recipe will download and build with DOC Group ACE/TAO v2 by default.
+To build the versioned recipe with DOC Group ACE/TAO v3 add the following to your local.conf
+    
+    ACE_TAO_OPTION = "--doc-group3"
   
 The unversioned recipe is provided to allow clients, via a bbappend, to
 build - for example - the HEAD of the master branch or some other version.
