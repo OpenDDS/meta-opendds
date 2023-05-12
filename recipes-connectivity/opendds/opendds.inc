@@ -97,6 +97,15 @@ do_install:append:class-native() {
     rm ${D}${datadir}/ace/bin/tao_idl
 }
 
+do_install:append:class-native() {
+    # Prepare HOST_ROOT expected by DDS for target build
+    mkdir -p ${D}${bindir}/DDS_HOST_ROOT/ACE_wrappers/bin
+    mkdir -p ${D}${bindir}/DDS_HOST_ROOT/bin
+    ln -sr ${D}${bindir}/opendds_idl ${D}${bindir}/DDS_HOST_ROOT/bin/opendds_idl
+    ln -sr ${D}${bindir}/ace_gperf ${D}${bindir}/DDS_HOST_ROOT/ACE_wrappers/bin/ace_gperf
+    ln -sr ${D}${bindir}/tao_idl ${D}${bindir}/DDS_HOST_ROOT/ACE_wrappers/bin/tao_idl
+}
+
 do_install:append:class-nativesdk() {
     ln -sf ${bindir}/opendds_idl ${D}${datadir}/dds/bin/opendds_idl
     ln -sf ${bindir}/ace_gperf ${D}${datadir}/ace/bin/ace_gperf

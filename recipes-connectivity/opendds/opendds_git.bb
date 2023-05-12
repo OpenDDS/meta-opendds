@@ -30,12 +30,3 @@ require opendds.inc
 do_install:append:class-target() {
     sed -i -e s:${S}/::g ${D}${libdir}/cmake/OpenDDS/config.cmake
 }
-
-do_install:append:class-native() {
-    # Prepare HOST_ROOT expected by DDS for target build
-    mkdir -p ${D}${bindir}/DDS_HOST_ROOT/ACE_TAO/ACE/bin
-    mkdir -p ${D}${bindir}/DDS_HOST_ROOT/bin
-    ln -sr ${D}${bindir}/opendds_idl ${D}${bindir}/DDS_HOST_ROOT/bin/opendds_idl
-    ln -sr ${D}${bindir}/ace_gperf ${D}${bindir}/DDS_HOST_ROOT/ACE_TAO/ACE/bin/ace_gperf
-    ln -sr ${D}${bindir}/tao_idl ${D}${bindir}/DDS_HOST_ROOT/ACE_TAO/ACE/bin/tao_idl
-}
