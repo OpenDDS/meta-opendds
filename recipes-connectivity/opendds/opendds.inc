@@ -98,6 +98,10 @@ do_install:append:class-target() {
             done
         fi
     done
+
+    # Copy MPC_ROOT folder to sysroot-destdir/usr/share/MPC
+    . ${S}/setenv.sh
+    cp -r ${MPC_ROOT} ${D}${datadir}/MPC
 }
 
 do_install:append:class-native() {
