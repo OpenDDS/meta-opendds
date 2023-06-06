@@ -10,6 +10,8 @@ DEPENDS += " \
     perl-native \
     cmake-native \
     opendds-native \
+    openssl \
+    xerces-c \     
 "
 
 RDEPENDS:${PN}-dev += " coreutils perl"
@@ -45,6 +47,10 @@ OECONF:append = "\
     --prefix=${prefix} \
     --verbose \
     --no-tests \
+    --no-rapidjson \
+    --security \
+    --openssl=${WORKDIR}/recipe-sysroot/usr \
+    --xerces3=${WORKDIR}/recipe-sysroot/usr \
     ${ACE_TAO_OPTION} \
 "
 
@@ -56,6 +62,9 @@ OECONF:append:class-target = "\
 OECONF:append:class-native = "\
     --target=linux \
     --host-tools-only \
+    --security \
+    --openssl=${WORKDIR}/recipe-sysroot-native/usr \
+    --xerces3=${WORKDIR}/recipe-sysroot-native/usr \
 "
 OECONF:append:class-nativesdk = "\
     --compiler=${S}/${HOST_PREFIX}g++ \
@@ -89,6 +98,10 @@ do_install:append:class-target() {
             done
         fi
     done
+
+    # Copy MPC_ROOT folder to sysroot-destdir/usr/share/MPC
+    . ${S}/setenv.sh
+    cp -r ${MPC_ROOT} ${D}${datadir}/MPC
 }
 
 do_install:append:class-native() {
