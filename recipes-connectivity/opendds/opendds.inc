@@ -14,7 +14,7 @@ DEPENDS += " \
     xerces-c \     
 "
 
-RDEPENDS:${PN}-dev += " coreutils perl"
+RDEPENDS:${PN}-dev += " coreutils perl bash make"
 
 S = "${WORKDIR}/git"
 
@@ -99,9 +99,24 @@ do_install:append:class-target() {
         fi
     done
 
-    # Copy MPC_ROOT folder to sysroot-destdir/usr/share/MPC
+    # Copy OpenDDS source tree folders to sysroot-destdir/usr/share/DDS_ROOT
+    # to support building OpenDDS apps in their own layers
     . ${S}/setenv.sh
-    cp -r ${MPC_ROOT} ${D}${datadir}/MPC
+    mkdir -p ${D}${datadir}/DDS_ROOT/ACE_wrappers
+    cp -r ${DDS_ROOT}/dds ${D}${datadir}/DDS_ROOT
+    cp -r ${DDS_ROOT}/MPC ${D}${datadir}/DDS_ROOT
+    cp -r ${DDS_ROOT}/tools ${D}${datadir}/DDS_ROOT
+    cp -r ${DDS_ROOT}/cmake ${D}${datadir}/DDS_ROOT
+    cp -r ${DDS_ROOT}/lib ${D}${datadir}/DDS_ROOT
+    cp ${DDS_ROOT}/*.GNU ${D}${datadir}/DDS_ROOT
+    cp ${DDS_ROOT}/*.txt ${D}${datadir}/DDS_ROOT
+    cp -r ${DDS_ROOT}/ACE_wrappers/ace ${D}${datadir}/DDS_ROOT/ACE_wrappers
+    cp -r ${DDS_ROOT}/ACE_wrappers/bin ${D}${datadir}/DDS_ROOT/ACE_wrappers
+    cp -r ${DDS_ROOT}/ACE_wrappers/include ${D}${datadir}/DDS_ROOT/ACE_wrappers
+    cp -r ${DDS_ROOT}/ACE_wrappers/MPC ${D}${datadir}/DDS_ROOT/ACE_wrappers
+    cp -r ${DDS_ROOT}/ACE_wrappers/TAO ${D}${datadir}/DDS_ROOT/ACE_wrappers
+    cp -r ${DDS_ROOT}/ACE_wrappers/lib ${D}${datadir}/DDS_ROOT/ACE_wrappers
+    cp ${DDS_ROOT}/ACE_wrappers/*.txt ${D}${datadir}/DDS_ROOT/ACE_wrappers
 }
 
 do_install:append:class-native() {
