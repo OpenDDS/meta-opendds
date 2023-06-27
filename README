@@ -5,9 +5,11 @@ Please see the corresponding sections below for details.
 Dependencies
 ============
 
-  URI:  https://git.yoctoproject.org/git/poky/meta
+  URI: git://git.openembedded.org/meta-openembedded
   branch: kirkstone
 
+  URI:  https://git.yoctoproject.org/git/poky/meta
+  branch: kirkstone
 
 Patches
 =======
@@ -20,13 +22,14 @@ Maintainer: Keith Derrick <keith.derrick@lge.com>
 Table of Contents
 =================
 
-  I. Adding the meta-opendds layer to your build
+  I. Adding the meta-openembedded/meta-oe and meta-opendds layers to your build
  II. Misc
 
 
-I. Adding the meta-opendds layer to your build
+I. Adding the meta-openembedded/meta-oe and meta-opendds layers to your build
 =================================================
 
+Run 'bitbake-layers add-layer meta-openembedded/meta-oe'
 Run 'bitbake-layers add-layer meta-opendds'
 
 II. Misc
@@ -57,4 +60,3 @@ distro configuration file.
 Note that simply providing a different branch and SRCREV may be insufficient.
 If your desired commit is significantly newer than that used for the versioned
 recipe, then the generic build instructions may be insufficient or incorrect.
-
