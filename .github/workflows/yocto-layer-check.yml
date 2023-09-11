@@ -21,7 +21,7 @@ jobs:
           mesa-common-dev zstd liblz4-tool
           
       - name: Check out meta-opendds repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         
       - name: Run yocto check layer script
         run: |
