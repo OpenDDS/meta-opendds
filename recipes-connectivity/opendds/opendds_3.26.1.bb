@@ -16,8 +16,8 @@ DOC_TAO2_URI = "https://github.com/DOCGroup/ACE_TAO/releases/download/ACE+TAO-${
 DOC_TAO3_URI = "https://github.com/DOCGroup/ACE_TAO/releases/download/ACE+TAO-${@'${DOC_TAO3_VERSION}'.replace('.','_')}/ACE+TAO-src-${DOC_TAO3_VERSION}.tar.gz"
 
 ACE_TAO_OPTION ??= ""
-ACE_TAO_URI ??= "${DOC_TAO2_URI}" 
-ACE_TAO_SHA256SUM ??= "${DOC_TAO2_SHA256SUM}" 
+ACE_TAO_URI ??= "${DOC_TAO2_URI}"
+ACE_TAO_SHA256SUM ??= "${DOC_TAO2_SHA256SUM}"
 
 python () {
     if d.getVar('ACE_TAO_OPTION') == '--doc-group3':

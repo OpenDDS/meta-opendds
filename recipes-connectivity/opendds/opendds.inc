@@ -6,15 +6,20 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=11ee76f6fb51f69658b5bb8327c50b11"
 
 inherit autotools
 
-DEPENDS += " \
-    perl-native \
+DEPENDS += "\
     cmake-native \
     opendds-native \
     openssl \
-    xerces-c \     
+    perl-native \
+    xerces-c \
 "
 
-RDEPENDS:${PN}-dev += " coreutils perl bash make"
+RDEPENDS:${PN}-dev += "\
+    bash \
+    coreutils \
+    make \
+    perl \
+"
 
 S = "${WORKDIR}/git"
 
