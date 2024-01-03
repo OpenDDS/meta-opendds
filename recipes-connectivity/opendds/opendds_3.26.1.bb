@@ -2,7 +2,10 @@
 
 SRCREV = "3d7f89e8243fbf382ce6374f900489e76894d4f9"
 DDS_SRC_BRANCH = "branch-DDS-3.26"
-SRC_URI = "git://github.com/OpenDDS/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH};name=opendds"
+SRC_URI = "\
+    git://github.com/OpenDDS/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH};name=opendds \
+    file://0002-fixing-DoAll-testing-DoAll.patch \
+"
 
 require opendds.inc
 
