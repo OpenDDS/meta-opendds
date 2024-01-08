@@ -37,7 +37,7 @@ II. Misc
 
 The layer contains two recipes for OpenDDS: one versioned and one not.
 
-If PREFERRED_VERSION is not specifed in your local.conf then the OpenDDS 3.24 recipe will be
+If PREFERRED_VERSION is not specifed in your local.conf then the OpenDDS 3.26.1 recipe will be
 selected for build by default
 
 The versioned recipe will download and build with DOC Group ACE/TAO v2 by default.

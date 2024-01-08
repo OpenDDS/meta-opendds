@@ -17,7 +17,7 @@ PV = "1.0+git${SRCPV}"
 DDS_SRC_BRANCH ??= "master"
 SRC_URI = "git://github.com/objectcomputing/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH}"
 
-OECONF = " \
+OECONF = "\
     --ace-github-latest \
 "
 
