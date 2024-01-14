@@ -78,6 +78,9 @@ OECONF:append:class-nativesdk = "\
     --host-tools-only \
 "
 
+SOLIBS = ".so*"
+FILES_SOLIBSDEV = ""
+
 do_configure() {
     ./configure ${OECONF}
 }
@@ -91,19 +94,6 @@ do_install:append:class-target() {
     # workaround: /usr/share/dds/dds/idl/IDLTemplate.txt should be placed into target sysroot
     install -d ${D}${datadir}/dds/dds/idl
     cp ${S}/dds/idl/IDLTemplate.txt ${D}${datadir}/dds/dds/idl
-
-    for shared_lib in ${D}${libdir}/*.so.*; do
-        if [ -f $shared_lib ]; then
-            baselib=$(basename $shared_lib)
-            shortlib=$(echo $baselib | sed 's/.so.*//')
-            extn=$(echo $baselib | sed -n 's/^[^.]*\.so//p')
-            extn=$(echo $extn | sed 's/[^. 0-9]*//g')
-            while [ -n "$extn" ]; do
-                extn=$(echo $extn | sed 's/\.[^.]*$//')
-                ln -sf $baselib ${D}${libdir}/$shortlib.so$extn
-            done
-        fi
-    done
 
     # Copy OpenDDS source tree folders to sysroot-destdir/usr/share/DDS_ROOT
     # to support building OpenDDS apps in their own layers
@@ -147,9 +137,8 @@ do_install:append:class-nativesdk() {
 }
 
 INSANE_SKIP:${PN} += "dev-so"
+INSANE_SKIP:${PN}-dev += "libdir"
 
-FILES:SOLIBSDEV = ""
-FILES:${PN} += "${libdir}/*.so"
 FILES:${PN}-dev += "${datadir}"
 
 BBCLASSEXTEND = "native nativesdk"
