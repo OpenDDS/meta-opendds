@@ -1,0 +1,29 @@
+From 7e415ebcf99f7f8a775fee4155063be58031d200 Mon Sep 17 00:00:00 2001
+From: Jan Vermaete <jan.vermaete@gmail.com>
+Date: Thu, 28 Dec 2023 15:18:07 +0100
+Subject: [PATCH 1/1] adding the ishapes demo
+
+Without having to use the --tests during configuration.
+This would include all tests.  And depends on gtests, what
+not part of common openembedded/Yocto layers.
+
+Signed-off-by: Jan Vermaete<jan.vermaete@gmail.com>
+---
+ DDS_TAOv2.mwc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/DDS_TAOv2.mwc b/DDS_TAOv2.mwc
+index 384e2620a..4f154deb2 100644
+--- a/DDS_TAOv2.mwc
++++ b/DDS_TAOv2.mwc
+@@ -6,6 +6,7 @@ workspace {
+   tools
+   java
+   DevGuideExamples
++  examples/DCPS/ishapes
+ 
+   exclude {
+     java/jms
+-- 
+2.39.2
+

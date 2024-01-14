@@ -7,6 +7,9 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=11ee76f6fb51f69658b5bb8327c50b11"
 
 inherit autotools
 
+PACKAGECONFIG ??= ""
+PACKAGECONFIG[ishapes] = "--qt=${STAGING_DIR_NATIVE}${prefix_native} --qt-include=${STAGING_INCDIR},,qtbase qtbase-native"
+
 DEPENDS += "\
     cmake-native \
     opendds-native \
@@ -64,6 +67,7 @@ OECONF:append:class-target = "\
     --host-tools=${STAGING_BINDIR_NATIVE}/DDS_HOST_ROOT \
     --target=linux-cross \
     --target-compiler=${S}/${HOST_PREFIX}g++ \
+    ${PACKAGECONFIG_CONFARGS} \
 "
 OECONF:append:class-native = "\
     --target=linux \
@@ -113,6 +117,11 @@ do_install:append:class-target() {
     cp -r ${DDS_ROOT}/ACE_wrappers/TAO ${D}${datadir}/DDS_ROOT/ACE_wrappers
     cp -r ${DDS_ROOT}/ACE_wrappers/lib ${D}${datadir}/DDS_ROOT/ACE_wrappers
     cp ${DDS_ROOT}/ACE_wrappers/*.txt ${D}${datadir}/DDS_ROOT/ACE_wrappers
+
+    if [ "${@bb.utils.contains("PACKAGECONFIG", "ishapes", "1", "0", d)}" = "1" ]; then
+        install -d ${D}${bindir}
+        install -m 0755 ${S}/examples/DCPS/ishapes/ishapes ${D}${bindir}/
+    fi
 }
 
 do_install:append:class-native() {
@@ -136,9 +145,14 @@ do_install:append:class-nativesdk() {
     ln -sf ${bindir}/tao_idl ${D}${datadir}/ace/bin/tao_idl
 }
 
+PACKAGES += "${PN}-ishapes"
+
 INSANE_SKIP:${PN} += "dev-so"
 INSANE_SKIP:${PN}-dev += "libdir"
 
 FILES:${PN}-dev += "${datadir}"
+FILES:${PN}-ishapes += "${bindir}/ishapes"
+
+ALLOW_EMPTY:${PN}-ishapes = "1"
 
 BBCLASSEXTEND = "native nativesdk"

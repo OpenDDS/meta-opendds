@@ -4,6 +4,7 @@ SRCREV = "3d7f89e8243fbf382ce6374f900489e76894d4f9"
 DDS_SRC_BRANCH = "branch-DDS-3.26"
 SRC_URI = "\
     git://github.com/OpenDDS/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH};name=opendds \
+    ${@bb.utils.contains('PACKAGECONFIG', 'ishapes', 'file://0001-adding-the-ishapes-demo.patch', '', d)} \
     file://0002-fixing-DoAll-testing-DoAll.patch \
 "
 
