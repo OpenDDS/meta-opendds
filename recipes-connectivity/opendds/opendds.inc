@@ -7,6 +7,9 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=11ee76f6fb51f69658b5bb8327c50b11"
 
 inherit autotools
 
+PACKAGECONFIG ??= ""
+PACKAGECONFIG[ishapes] = "--qt=${STAGING_DIR_NATIVE}${prefix_native} --qt-include=${STAGING_INCDIR},,qtbase qtbase-native"
+
 DEPENDS += "\
     cmake-native \
     opendds-native \
@@ -64,6 +67,7 @@ OECONF:append:class-target = "\
     --host-tools=${STAGING_BINDIR_NATIVE}/DDS_HOST_ROOT \
     --target=linux-cross \
     --target-compiler=${S}/${HOST_PREFIX}g++ \
+    ${PACKAGECONFIG_CONFARGS} \
 "
 OECONF:append:class-native = "\
     --target=linux \
@@ -78,6 +82,9 @@ OECONF:append:class-nativesdk = "\
     --host-tools-only \
 "
 
+SOLIBS = ".so*"
+FILES_SOLIBSDEV = ""
+
 do_configure() {
     ./configure ${OECONF}
 }
@@ -91,19 +98,6 @@ do_install:append:class-target() {
     # workaround: /usr/share/dds/dds/idl/IDLTemplate.txt should be placed into target sysroot
     install -d ${D}${datadir}/dds/dds/idl
     cp ${S}/dds/idl/IDLTemplate.txt ${D}${datadir}/dds/dds/idl
-
-    for shared_lib in ${D}${libdir}/*.so.*; do
-        if [ -f $shared_lib ]; then
-            baselib=$(basename $shared_lib)
-            shortlib=$(echo $baselib | sed 's/.so.*//')
-            extn=$(echo $baselib | sed -n 's/^[^.]*\.so//p')
-            extn=$(echo $extn | sed 's/[^. 0-9]*//g')
-            while [ -n "$extn" ]; do
-                extn=$(echo $extn | sed 's/\.[^.]*$//')
-                ln -sf $baselib ${D}${libdir}/$shortlib.so$extn
-            done
-        fi
-    done
 
     # Copy OpenDDS source tree folders to sysroot-destdir/usr/share/DDS_ROOT
     # to support building OpenDDS apps in their own layers
@@ -123,6 +117,11 @@ do_install:append:class-target() {
     cp -r ${DDS_ROOT}/ACE_wrappers/TAO ${D}${datadir}/DDS_ROOT/ACE_wrappers
     cp -r ${DDS_ROOT}/ACE_wrappers/lib ${D}${datadir}/DDS_ROOT/ACE_wrappers
     cp ${DDS_ROOT}/ACE_wrappers/*.txt ${D}${datadir}/DDS_ROOT/ACE_wrappers
+
+    if [ "${@bb.utils.contains("PACKAGECONFIG", "ishapes", "1", "0", d)}" = "1" ]; then
+        install -d ${D}${bindir}
+        install -m 0755 ${S}/examples/DCPS/ishapes/ishapes ${D}${bindir}/
+    fi
 }
 
 do_install:append:class-native() {
@@ -146,10 +145,14 @@ do_install:append:class-nativesdk() {
     ln -sf ${bindir}/tao_idl ${D}${datadir}/ace/bin/tao_idl
 }
 
-INSANE_SKIP:${PN} += "dev-so"
+PACKAGES += "${PN}-ishapes"
 
-FILES:SOLIBSDEV = ""
-FILES:${PN} += "${libdir}/*.so"
+INSANE_SKIP:${PN} += "dev-so"
+INSANE_SKIP:${PN}-dev += "libdir"
+
 FILES:${PN}-dev += "${datadir}"
+FILES:${PN}-ishapes += "${bindir}/ishapes"
+
+ALLOW_EMPTY:${PN}-ishapes = "1"
 
 BBCLASSEXTEND = "native nativesdk"
