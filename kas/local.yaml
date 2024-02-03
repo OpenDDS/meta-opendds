@@ -1,0 +1,13 @@
+header:
+    version: 1
+
+local_conf_header:
+    pc: |
+        PARALLEL_MAKE = "-j 4"
+        BB_NUMBER_THREADS = "4"
+    build_faster: |
+        DL_DIR = "/var/lib/yocto/downloads"
+        SSTATE_DIR = "/var/lib/yocto/sstate-cache"
+    buildhistory: |
+        INHERIT += "buildhistory"
+        BUILDHISTORY_COMMIT = "1"
