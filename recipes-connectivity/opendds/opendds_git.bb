@@ -17,11 +17,9 @@ PV = "1.0+git${SRCPV}"
 DDS_SRC_BRANCH ??= "master"
 SRC_URI = "git://github.com/objectcomputing/OpenDDS.git;protocol=https;branch=${DDS_SRC_BRANCH}"
 
-OECONF = "\
+OECONF:append = "\
     --ace-github-latest \
 "
-
-ACE_TAO_OPTION = ""
 
 do_configure[network] = "1"
 
