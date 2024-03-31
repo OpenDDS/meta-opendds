@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  YOCTO_RELEASE: kirkstone
+  YOCTO_RELEASE: scarthgap
 
 jobs:
   yocto-check-layer:
