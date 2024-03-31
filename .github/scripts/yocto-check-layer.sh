@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -xe
+
 export DEFAULT_YOCTO_BRANCH="master"
 
 if [[ -z "${YOCTO_RELEASE}" ]]; then
