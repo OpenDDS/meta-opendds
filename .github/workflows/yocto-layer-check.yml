@@ -1,28 +1,28 @@
 name: Run Yocto Check Layer
-on: 
+on:
   pull_request:
     types: [opened, reopened]
   workflow_dispatch:
 
 env:
-  YOCTO_RELEASE: kirkstone
+  YOCTO_RELEASE: scarthgap
 
 jobs:
   yocto-check-layer:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Install yocto build dependancies
         run: |
-          sudo apt-get update
-          sudo apt-get install gawk wget git diffstat unzip texinfo gcc \
+          sudo apt update
+          sudo apt install gawk wget git diffstat unzip texinfo gcc \
           build-essential chrpath socat cpio python3 python3-pip python3-pexpect \
           xz-utils debianutils iputils-ping python3-git python3-jinja2 \
-          libegl1-mesa libsdl1.2-dev pylint3 xterm python3-subunit \
-          mesa-common-dev zstd liblz4-tool
-          
+          libegl1-mesa libsdl1.2-dev python3-subunit \
+          mesa-common-dev zstd liblz4-tool file locales libacl1
+          sudo locale-gen en_US.UTF-8
       - name: Check out meta-opendds repo
         uses: actions/checkout@v4
-        
+
       - name: Run yocto check layer script
         run: |
           "${GITHUB_WORKSPACE}/.github/scripts/yocto-check-layer.sh"

@@ -7,6 +7,8 @@ Without having to use the --tests during configuration.
 This would include all tests.  And depends on gtests, what
 not part of common openembedded/Yocto layers.
 
+Upstream-Status: Inappropriate [should be fixed when going to cmake https://github.com/OpenDDS/OpenDDS/pull/4374]
+
 Signed-off-by: Jan Vermaete<jan.vermaete@gmail.com>
 ---
  DDS_TAOv2.mwc | 1 +

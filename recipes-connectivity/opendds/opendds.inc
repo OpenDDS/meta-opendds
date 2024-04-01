@@ -7,17 +7,16 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=11ee76f6fb51f69658b5bb8327c50b11"
 
 inherit autotools
 
-PACKAGECONFIG ??= ""
+PACKAGECONFIG ??= "security"
 PACKAGECONFIG:class-native ??= ""
+PACKAGECONFIG[security] = "--security, , openssl xerces-c, "
 PACKAGECONFIG[ishapes] = "--qt=${STAGING_DIR_NATIVE}${prefix_native} --qt-include=${STAGING_INCDIR},,qtbase qtbase-native"
 PACKAGECONFIG[doc-group3] = "--doc-group3,,"
 
 DEPENDS += "\
     cmake-native \
     opendds-native \
-    openssl \
     perl-native \
-    xerces-c \
 "
 
 RDEPENDS:${PN}-dev += "\
@@ -59,9 +58,6 @@ OECONF:append = "\
     --verbose \
     --no-tests \
     --no-rapidjson \
-    --security \
-    --openssl=${WORKDIR}/recipe-sysroot/usr \
-    --xerces3=${WORKDIR}/recipe-sysroot/usr \
     ${PACKAGECONFIG_CONFARGS} \
 "
 
@@ -69,13 +65,13 @@ OECONF:append:class-target = "\
     --host-tools=${STAGING_BINDIR_NATIVE}/DDS_HOST_ROOT \
     --target=linux-cross \
     --target-compiler=${S}/${HOST_PREFIX}g++ \
+    ${@bb.utils.contains('PACKAGECONFIG', 'security', '--openssl=${WORKDIR}/recipe-sysroot/usr', '', d)} \
+    ${@bb.utils.contains('PACKAGECONFIG', 'security', '--xerces3=${WORKDIR}/recipe-sysroot/usr', '', d)} \
 "
 OECONF:append:class-native = "\
     --target=linux \
     --host-tools-only \
-    --security \
-    --openssl=${WORKDIR}/recipe-sysroot-native/usr \
-    --xerces3=${WORKDIR}/recipe-sysroot-native/usr \
+    --no-security \
 "
 OECONF:append:class-nativesdk = "\
     --compiler=${S}/${HOST_PREFIX}g++ \
