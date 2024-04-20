@@ -6,10 +6,10 @@ Dependencies
 ============
 
   URI: git://git.openembedded.org/meta-openembedded
-  branch: kirkstone
+  branch: scarthgap
 
   URI:  https://git.yoctoproject.org/git/poky/meta
-  branch: kirkstone
+  branch: scarthgap
 
 Patches
 =======
@@ -37,7 +37,7 @@ II. Misc
 
 The layer contains two recipes for OpenDDS: one versioned and one not.
 
-If PREFERRED_VERSION is not specifed in your local.conf then the OpenDDS 3.26.1 recipe will be
+If PREFERRED_VERSION is not specifed in your local.conf then the OpenDDS 3.28.0 recipe will be
 selected for build by default
 
 The versioned recipe will use the DOC Group ACE/TAO v2 by default.
