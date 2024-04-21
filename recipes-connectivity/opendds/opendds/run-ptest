@@ -1,0 +1,11 @@
+#!/bin/sh
+
+export DDS_ROOT=/usr/share/DDS_ROOT
+export ACE_ROOT=/usr
+export TAO_ROOT=/usr
+export PERLLIB="$PERLLIB:/usr/share/DDS_ROOT/tools/scripts/modules"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$DDS_ROOT/lib"
+LOG="/tmp/opendds_ptest_$(date +%Y%m%d-%H%M%S).log"
+
+# Todo: some sed experts can do their thing
+${DDS_ROOT}/tests/auto_run_tests.pl @PTEST_ARGS@ 2>&1 | tee -a ${LOG} | sed -rnu '/^auto_run_tests_finished:/p' | sed  -u 's/^auto_run_tests_finished: // ; /Result:0/ s/^/PASS: / ; /Result:0/! s/^/FAIL: /' | sed -u 's/\(.*\) \(Time:.*\) \(Result:.*\)/\1/'
