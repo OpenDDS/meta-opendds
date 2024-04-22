@@ -5,13 +5,16 @@ BUGTRACKER = "https://github.com/OpenDDS/OpenDDS/issues"
 LICENSE = "OpenDDS"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=11ee76f6fb51f69658b5bb8327c50b11"
 
-inherit autotools
+inherit autotools ptest
 
-PACKAGECONFIG ??= "security"
+SRC_URI:append = " file://run-ptest"
+
+PACKAGECONFIG ??= "security ${@bb.utils.contains('DISTRO_FEATURES', 'ptest', 'tests', '', d)}"
 PACKAGECONFIG:class-native ??= ""
 PACKAGECONFIG[security] = "--security, , openssl xerces-c, "
 PACKAGECONFIG[ishapes] = "--qt=${STAGING_DIR_NATIVE}${prefix_native} --qt-include=${STAGING_INCDIR},,qtbase qtbase-native"
 PACKAGECONFIG[doc-group3] = "--doc-group3,,"
+PACKAGECONFIG[tests] = "--tests --gtest=${WORKDIR}/recipe-sysroot/usr, --no-tests, googletest, perl packagegroup-meta-perl perl-module-tie-array perl-module-english, ,ishapes"
 
 DEPENDS += "\
     cmake-native \
@@ -56,7 +59,6 @@ OECONF ??= ""
 OECONF:append = "\
     --prefix=${prefix} \
     --verbose \
-    --no-tests \
     --no-rapidjson \
     ${PACKAGECONFIG_CONFARGS} \
 "
@@ -142,6 +144,69 @@ do_install:append:class-nativesdk() {
     ln -sf ${bindir}/tao_idl ${D}${datadir}/ace/bin/tao_idl
 }
 
+do_install_ptest() {
+    sed -i "s#@PTEST_ARGS@#${@bb.utils.contains('PACKAGECONFIG', 'security', '--security', '', d)}#g" ${D}${PTEST_PATH}/run-ptest
+
+    install -d ${D}${datadir}/DDS_ROOT/
+    install -d ${D}${datadir}/DDS_ROOT/tests
+    cd ${S}/tests
+    tar --no-same-owner \
+        --exclude='*.mpc'\
+        --exclude='*.o' \
+        --exclude='GNUmakefile*'\
+        --exclude='.gitignore'\
+        --exclude='.depend*'\
+        --exclude='.obj*'\
+        -cpf - . \
+        | tar --no-same-owner -xpf - -C ${D}${datadir}/DDS_ROOT/tests
+
+    install -d ${D}${datadir}/DDS_ROOT/performance-tests
+    cd ${S}/performance-tests
+    tar --no-same-owner \
+        --exclude='*.mpc'\
+        --exclude='*.o' \
+        --exclude='GNUmakefile*'\
+        --exclude='.gitignore'\
+        --exclude='.depend*'\
+        --exclude='.obj*'\
+        -cpf - . \
+        | tar --no-same-owner -xpf - -C ${D}${datadir}/DDS_ROOT/performance-tests
+
+    install -d ${D}${datadir}/DDS_ROOT/DevGuideExamples
+    cd ${S}/DevGuideExamples
+    tar --no-same-owner \
+        --exclude='*.mpc'\
+        --exclude='*.o' \
+        --exclude='GNUmakefile*'\
+        --exclude='.gitignore'\
+        --exclude='.depend*'\
+        --exclude='.obj*'\
+        -cpf - . \
+        | tar --no-same-owner -xpf - -C ${D}${datadir}/DDS_ROOT/DevGuideExamples
+
+    install -d ${D}${datadir}/DDS_ROOT/examples
+    cd ${S}/examples
+    tar --no-same-owner \
+        --exclude='*.mpc'\
+        --exclude='*.o' \
+        --exclude='GNUmakefile*'\
+        --exclude='.gitignore'\
+        --exclude='.depend*'\
+        --exclude='.obj*'\
+        -cpf - . \
+        | tar --no-same-owner -xpf - -C ${D}${datadir}/DDS_ROOT/examples
+
+    # A symbolic link because the test script will search the execuables under DDS_ROOT.
+    # But because of the --prefix in the configure they are installed under /usr/bin
+    ln -s ${bindir} ${D}${datadir}/DDS_ROOT/bin
+    install -d ${D}/usr/lib/perl5/5.38.2/PerlACE
+    install -m 644 ${S}/ACE_wrappers/bin/PerlACE/*.pm ${D}/usr/lib/perl5/5.38.2/PerlACE
+    install -d ${D}/usr/lib/perl5/5.38.2/PerlDDS
+    install -m 644 ${S}/bin/PerlDDS/*.pm ${D}/usr/lib/perl5/5.38.2/PerlDDS
+    install -d ${D}${datadir}/DDS_ROOT/tools/scripts/modules
+    install -m 644 ${S}/tools/scripts/modules/*.pm ${D}${datadir}/DDS_ROOT/tools/scripts/modules
+}
+
 PACKAGES += "${PN}-ishapes"
 
 INSANE_SKIP:${PN} += "dev-so"
@@ -149,6 +214,7 @@ INSANE_SKIP:${PN}-dev += "libdir"
 
 FILES:${PN}-dev += "${datadir}"
 FILES:${PN}-ishapes += "${bindir}/ishapes"
+FILES:${PN}-ptest += "${libdir}/perl5/5.38.2/PerlACE ${libdir}/perl5/5.38.2/PerlDDS"
 
 ALLOW_EMPTY:${PN}-ishapes = "1"
 

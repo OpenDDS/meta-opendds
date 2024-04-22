@@ -1,0 +1,14 @@
+header:
+    version: 1
+
+repos:
+    meta-qt5:
+        url: https://github.com/meta-qt5/meta-qt5/
+        path: layers/meta-qt5
+        branch: master  # Scartgap release not yet available
+
+local_conf_header:
+    opendds-ishapes: |
+        IMAGE_INSTALL:append = " opendds-ishapes"
+        PACKAGECONFIG:append:pn-opendds = " ishapes"
+        DISTRO_FEATURES:remove = " ptest"

@@ -1,0 +1,8 @@
+header:
+    version: 1
+
+local_conf_header:
+    opendds-testing: |
+        DISTRO_FEATURES:append = " ptest"
+        EXTRA_IMAGE_FEATURES += "ptest-pkgs"
+        IMAGE_INSTALL:append = " opendds-dev"
