@@ -9,6 +9,10 @@ inherit autotools ptest
 
 SRC_URI:append = " file://run-ptest"
 
+SRC_URI:append = " \
+    ${@bb.utils.contains('PACKAGECONFIG', 'tests', 'file://0003-tests-added-dependencies-to-run-all-tests.patch', '', d)} \
+    "
+
 PACKAGECONFIG ??= "security ${@bb.utils.contains('DISTRO_FEATURES', 'ptest', 'tests', '', d)}"
 PACKAGECONFIG:class-native ??= ""
 PACKAGECONFIG[security] = "--security, , openssl xerces-c, "
@@ -153,6 +157,10 @@ do_install_ptest() {
     tar --no-same-owner \
         --exclude='*.mpc'\
         --exclude='*.o' \
+        --exclude='*.h' \
+        --exclude='*.cpp' \
+        --exclude='*.idl' \
+        --exclude='*.inl' \
         --exclude='GNUmakefile*'\
         --exclude='.gitignore'\
         --exclude='.depend*'\
@@ -165,6 +173,10 @@ do_install_ptest() {
     tar --no-same-owner \
         --exclude='*.mpc'\
         --exclude='*.o' \
+        --exclude='*.h' \
+        --exclude='*.cpp' \
+        --exclude='*.idl' \
+        --exclude='*.inl' \
         --exclude='GNUmakefile*'\
         --exclude='.gitignore'\
         --exclude='.depend*'\
@@ -177,6 +189,10 @@ do_install_ptest() {
     tar --no-same-owner \
         --exclude='*.mpc'\
         --exclude='*.o' \
+        --exclude='*.h' \
+        --exclude='*.cpp' \
+        --exclude='*.idl' \
+        --exclude='*.inl' \
         --exclude='GNUmakefile*'\
         --exclude='.gitignore'\
         --exclude='.depend*'\
@@ -189,12 +205,20 @@ do_install_ptest() {
     tar --no-same-owner \
         --exclude='*.mpc'\
         --exclude='*.o' \
+        --exclude='*.h' \
+        --exclude='*.cpp' \
+        --exclude='*.idl' \
+        --exclude='*.inl' \
         --exclude='GNUmakefile*'\
         --exclude='.gitignore'\
         --exclude='.depend*'\
         --exclude='.obj*'\
         -cpf - . \
         | tar --no-same-owner -xpf - -C ${D}${datadir}/DDS_ROOT/examples
+
+    # tests do expect this excutable here
+    install -d ${D}${bindir}
+    install -m 755 ${S}/tools/repoctl/repoctl ${D}${bindir}
 
     # A symbolic link because the test script will search the execuables under DDS_ROOT.
     # But because of the --prefix in the configure they are installed under /usr/bin
@@ -205,6 +229,7 @@ do_install_ptest() {
     install -m 644 ${S}/bin/PerlDDS/*.pm ${D}/usr/lib/perl5/5.38.2/PerlDDS
     install -d ${D}${datadir}/DDS_ROOT/tools/scripts/modules
     install -m 644 ${S}/tools/scripts/modules/*.pm ${D}${datadir}/DDS_ROOT/tools/scripts/modules
+
 }
 
 PACKAGES += "${PN}-ishapes"
