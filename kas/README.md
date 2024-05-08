@@ -25,11 +25,21 @@ git clone https://github.com/OpenDDS/meta-opendds.git
 Building
 --------
 
+### Rasberry Pi 4
+
 ```
 cd meta-opendds
-kas build kas/rpi.yaml; # Just OpenDDS for RPi
-kas build kas/rpi.yaml:kas/ishapes.yaml; # iShapes demo
-kas build kas/rpi.yaml:kas/ptests.yaml; # OpenDDS with Yocto ptests
+kas build kas/rpi.yaml:kas/opendds.yaml; # Just OpenDDS for RPi
+kas build kas/rpi.yaml:kas/opendds.yaml:kas/ishapes.yaml; # iShapes demo
+kas build kas/rpi.yaml:kas/opendds.yaml:kas/ptests.yaml; # OpenDDS with Yocto ptests
+```
+
+### Qemu
+
+```
+cd meta-opendds
+kas build kas/qemu.yaml:kas/opendds.yaml;
+kas build kas/qemu.yaml:kas/opendds.yaml:kas/ptests.yaml; # OpenDDS with Yocto ptests
 ```
 
 Deploying
@@ -47,14 +57,42 @@ sudo bmaptool copy core-image-minimal-xfce-raspberrypi4-64.rootfs.wic.bz2 /dev/s
 Testing
 -------
 
-### Run the ishapes demo
+### Raspberry Pi
+
+#### Run the ishapes demo
 
 Open a terminal on the Raspberry Pi.
 Run `ishapes`
 
-### Running the Yocto ptests for OpenDDS
+#### Running the Yocto ptests for OpenDDS
 
 Open a terminal on the Raspberry Pi.
 Run `ptest-runner opendds`
 
 A detailed log of the run can be found on the `/tmp` of the device.
+
+### qemu
+
+#### Start QEMU
+
+```
+kas sheel kas/qemu.yaml:kas/opendds.yaml:kas/ptests.yaml
+cd tmp/deploy/images/qemux86-64
+runqemu core-image-minimal-qemux86-64.rootfs.qemuboot.conf qemux86-64 nographic
+```
+
+#### Login
+
+* user root
+* no password
+
+#### Run the ptests
+
+```
+root@quemu-opendds:~# ptest-runner opendds
+```
+
+#### Exit
+
+```CTRL-a + x```
+

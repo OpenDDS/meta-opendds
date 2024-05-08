@@ -1,18 +1,12 @@
 header:
     version: 1
 
-machine: raspberrypi4-64
+machine: qemux86-64
 
 distro: poky
 
-target: core-image-minimal-xfce
-
 repos:
     meta-opendds:
-    meta-raspberrypi:
-        url: https://github.com/agherzan/meta-raspberrypi
-        path: layers/meta-raspberrypi
-        branch: master  # Scartgap release not yet available
     poky:
         url: https://git.yoctoproject.org/git/poky
         path: layers/poky
@@ -29,9 +23,6 @@ repos:
             meta-python:
             meta-networking:
             meta-perl:
-            meta-gnome:
-            meta-multimedia:
-            meta-xfce:
 
 bblayers_conf_header:
     standard: |
@@ -59,7 +50,9 @@ local_conf_header:
             HALT,/tmp,10M,1K"
     network: |
         IMAGE_FEATURES:append = " ssh-server-openssh"
-        hostname:pn-base-files = "rpi4-opendds"
+        hostname:pn-base-files = "quemu-opendds"
     system: |
         DISTRO_FEATURES:append = " systemd usrmerge"
         VIRTUAL-RUNTIME_init_manager = "systemd"
+    qemu: |
+        QB_MEM = "-m 4096"

@@ -13,6 +13,7 @@ SRC_URI = "\
     ${@bb.utils.contains('PACKAGECONFIG', 'doc-group3', '${DOC_TAO3_URI};name=ace_tao;unpack=0;subdir=git', '${DOC_TAO2_URI};name=ace_tao;unpack=0;subdir=git', d)} \
     ${@bb.utils.contains('PACKAGECONFIG', 'ishapes', 'file://0001-adding-the-ishapes-demo.patch', '', d)} \
     file://0002-gov-gen-uses-openssl-API-incorrectly.patch \
+    file://0010-WIP-test-filter-tests-that-should-not-run-on-the-tar.patch \
 "
 
 require opendds.inc
