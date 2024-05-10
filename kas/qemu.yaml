@@ -55,4 +55,4 @@ local_conf_header:
         DISTRO_FEATURES:append = " systemd usrmerge"
         VIRTUAL-RUNTIME_init_manager = "systemd"
     qemu: |
-        QB_MEM = "-m 4096"
+        QB_MEM = "-m 8192"
