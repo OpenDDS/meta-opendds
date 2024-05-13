@@ -31,7 +31,7 @@ Building
 cd meta-opendds
 kas build kas/rpi.yaml:kas/opendds.yaml; # Just OpenDDS for RPi
 kas build kas/rpi.yaml:kas/opendds.yaml:kas/ishapes.yaml; # iShapes demo
-kas build kas/rpi.yaml:kas/opendds.yaml:kas/ptests.yaml; # OpenDDS with Yocto ptests
+kas build kas/rpi.yaml:kas/opendds.yaml:kas/ptest.yaml; # OpenDDS with Yocto ptests
 ```
 
 ### Qemu
@@ -39,7 +39,7 @@ kas build kas/rpi.yaml:kas/opendds.yaml:kas/ptests.yaml; # OpenDDS with Yocto pt
 ```
 cd meta-opendds
 kas build kas/qemu.yaml:kas/opendds.yaml;
-kas build kas/qemu.yaml:kas/opendds.yaml:kas/ptests.yaml; # OpenDDS with Yocto ptests
+kas build kas/qemu.yaml:kas/opendds.yaml:kas/ptest.yaml; # OpenDDS with Yocto ptests
 ```
 
 Deploying
@@ -76,7 +76,7 @@ A detailed log of the run can be found on the `/tmp` of the device.
 #### Start QEMU
 
 ```
-kas sheel kas/qemu.yaml:kas/opendds.yaml:kas/ptests.yaml
+kas shell kas/qemu.yaml:kas/opendds.yaml:kas/ptest.yaml
 cd tmp/deploy/images/qemux86-64
 runqemu core-image-minimal-qemux86-64.rootfs.qemuboot.conf qemux86-64 nographic
 ```
