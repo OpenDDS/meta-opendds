@@ -13,11 +13,13 @@ SRC_URI:append = " \
     ${@bb.utils.contains('PACKAGECONFIG', 'tests', 'file://0003-tests-added-dependencies-to-run-all-tests.patch', '', d)} \
     "
 
-PACKAGECONFIG ??= "security ${@bb.utils.contains('DISTRO_FEATURES', 'ptest', 'tests', '', d)}"
-PACKAGECONFIG:class-native ??= ""
+PACKAGECONFIG ??= "doc-group2 security ${@bb.utils.contains('DISTRO_FEATURES', 'ptest', 'tests', '', d)}"
+PACKAGECONFIG:class-native ??= "doc-group2"
 PACKAGECONFIG[security] = "--security, , openssl xerces-c, "
 PACKAGECONFIG[ishapes] = "--qt=${STAGING_DIR_NATIVE}${prefix_native} --qt-include=${STAGING_INCDIR},,qtbase qtbase-native"
-PACKAGECONFIG[doc-group3] = "--doc-group3,,"
+PACKAGECONFIG[doc-group2] = "--ace-tao=ace6tao2,,,,,doc-group3 doc-group4"
+PACKAGECONFIG[doc-group3] = "--ace-tao=ace7tao3,,,,,doc-group2 doc-group4"
+PACKAGECONFIG[doc-group4] = "--ace-tao=ace8tao4,,,,,doc-group2 doc-group3"
 PACKAGECONFIG[tests] = "--tests --gtest=${WORKDIR}/recipe-sysroot/usr, --no-tests, googletest, perl packagegroup-meta-perl perl-module-tie-array perl-module-english, ,ishapes"
 
 DEPENDS += "\
