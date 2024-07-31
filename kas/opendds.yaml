@@ -4,6 +4,4 @@ header:
 local_conf_header:
     opendds: |
         IMAGE_INSTALL:append = " opendds"
-        PACKAGECONFIG:append:pn-opendds = " doc-group3"
-        PACKAGECONFIG:append:pn-opendds-native = " doc-group3"
         INHERIT += "cve-check"

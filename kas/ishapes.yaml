@@ -5,7 +5,7 @@ repos:
     meta-qt5:
         url: https://github.com/meta-qt5/meta-qt5/
         path: layers/meta-qt5
-        branch: master  # Scartgap release not yet available
+        branch: scarthgap
 
 local_conf_header:
     opendds-ishapes: |

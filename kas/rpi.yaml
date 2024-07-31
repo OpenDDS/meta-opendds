@@ -12,7 +12,7 @@ repos:
     meta-raspberrypi:
         url: https://github.com/agherzan/meta-raspberrypi
         path: layers/meta-raspberrypi
-        branch: master  # Scartgap release not yet available
+        branch: scarthgap
     poky:
         url: https://git.yoctoproject.org/git/poky
         path: layers/poky

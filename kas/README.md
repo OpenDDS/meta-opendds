@@ -34,6 +34,24 @@ kas build kas/rpi.yaml:kas/opendds.yaml:kas/ishapes.yaml; # iShapes demo
 kas build kas/rpi.yaml:kas/opendds.yaml:kas/ptest.yaml; # OpenDDS with Yocto ptests
 ```
 
+### ACE/TAO
+
+#### doc-group2
+
+is default
+
+#### doc-group3
+
+```
+kas build kas/rpi.yaml:kas/opendds.yaml:kas/docgroup3.yaml; # Just OpenDDS for RPi with doc-group3
+```
+
+#### doc-group4
+
+```
+kas build kas/rpi.yaml:kas/opendds.yaml:kas/docgroup4.yaml; # Just OpenDDS for RPi with doc-group4
+```
+
 ### Qemu
 
 ```

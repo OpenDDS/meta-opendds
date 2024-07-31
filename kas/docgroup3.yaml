@@ -1,0 +1,11 @@
+header:
+    version: 1
+
+local_conf_header:
+    opendds-docgroup: |
+        # remove the default doc-group2 packageconfig
+        PACKAGECONFIG:remove:pn-opendds = " doc-group2"
+        PACKAGECONFIG:remove:pn-opendds-native = " doc-group2"
+        # use doc-group4
+        PACKAGECONFIG:append:pn-opendds = " doc-group3"
+        PACKAGECONFIG:append:pn-opendds-native = " doc-group3"
