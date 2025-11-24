@@ -21,7 +21,7 @@ jobs:
           mesa-common-dev zstd liblz4-tool file locales libacl1
           sudo locale-gen en_US.UTF-8
       - name: Check out meta-opendds repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Run yocto check layer script
         run: |
